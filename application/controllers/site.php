@@ -1136,6 +1136,8 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
+        $data['societyfacility']=$this->societyfacility_model->getsocietyfacilitydropdown();
+        $data['amenity']=$this->amenity_model->getamenitydropdown();
         $data['category']=$this->property_model->getcategorydropdown();
         $data['builder']=$this->builder_model->getbuilderdropdown();
         $data['listingowner']=$this->user_model->getlistingownerdropdown();
@@ -1158,9 +1160,47 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('email','Email','trim|required|valid_email');
+		$this->form_validation->set_rules('price','price','trim');
+		$this->form_validation->set_rules('category','category','trim');
+		$this->form_validation->set_rules('builder','builder','trim');
+		$this->form_validation->set_rules('listingowner','listingowner','trim');
+		$this->form_validation->set_rules('leasetype','leasetype','trim');
+		$this->form_validation->set_rules('propertytype','propertytype','trim');
+		$this->form_validation->set_rules('bathroom','bathroom','trim');
+		$this->form_validation->set_rules('negotiable','negotiable','trim');
+		$this->form_validation->set_rules('bhk','bhk','trim');
+		$this->form_validation->set_rules('address1','address1','trim');
+		$this->form_validation->set_rules('address2','address2','trim');
+		$this->form_validation->set_rules('locality','locality','trim');
+		$this->form_validation->set_rules('city','city','trim');
+		$this->form_validation->set_rules('pincode','pincode','trim');
+		$this->form_validation->set_rules('builduparea','builduparea','trim');
+		$this->form_validation->set_rules('carpetarea','carpetarea','trim');
+		$this->form_validation->set_rules('facing','facing','trim');
+		$this->form_validation->set_rules('powerbackup','powerbackup','trim');
+		$this->form_validation->set_rules('verified','verified','trim');
+		$this->form_validation->set_rules('status','status','trim');
+		$this->form_validation->set_rules('reportmessage','reportmessage','trim');
+		$this->form_validation->set_rules('commitecode','commitecode','trim');
+		$this->form_validation->set_rules('localityscore','localityscore','trim');
+		$this->form_validation->set_rules('societyscore','societyscore','trim');
+		$this->form_validation->set_rules('possesion','possesion','trim');
+		$this->form_validation->set_rules('aerialview','aerialview','trim');
+		$this->form_validation->set_rules('insights','insights','trim');
+		$this->form_validation->set_rules('pricetrends','pricetrends','trim');
+		$this->form_validation->set_rules('yearofestablishment','yearofestablishment','trim');
+		$this->form_validation->set_rules('totalproject','totalproject','trim');
+		$this->form_validation->set_rules('associatemembership','associatemembership','trim');
+		$this->form_validation->set_rules('interior','interior','trim');
+		$this->form_validation->set_rules('threedfloorplan','3Dfloorplan','trim');
+		$this->form_validation->set_rules('iscommercial','iscommercial','trim');
+		$this->form_validation->set_rules('securitydeposite','securitydeposite','trim');
 		if($this->form_validation->run() == FALSE)	
 		{
 			$data['alerterror'] = validation_errors();
+            $data['societyfacility']=$this->societyfacility_model->getsocietyfacilitydropdown();
+            $data['amenity']=$this->amenity_model->getamenitydropdown();
             $data['category']=$this->property_model->getcategorydropdown();
             $data['builder']=$this->builder_model->getbuilderdropdown();
             $data['listingowner']=$this->user_model->getlistingownerdropdown();
@@ -1180,7 +1220,49 @@ class Site extends CI_Controller
 		}
 		else
 		{
+            
             $name=$this->input->post('name');
+            $email=$this->input->post('email');
+            $category=$this->input->post('category');
+            $builder=$this->input->post('builder');
+            $listingowner=$this->input->post('listingowner');
+            $price=$this->input->post('price');
+            $leasetype=$this->input->post('leasetype');
+            $listedby=$this->input->post('listedby');
+            $furnishing=$this->input->post('furnishing');
+            $propertytype=$this->input->post('propertytype');
+            $bathroom=$this->input->post('bathroom');
+            $negotiable=$this->input->post('negotiable');
+            $bhk=$this->input->post('bhk');
+            $address1=$this->input->post('address1');
+            $address2=$this->input->post('address2');
+            $locality=$this->input->post('locality');
+            $city=$this->input->post('city');
+            $pincode=$this->input->post('pincode');
+            $builduparea=$this->input->post('builduparea');
+            $carpetarea=$this->input->post('carpetarea');
+            $facing=$this->input->post('facing');
+            $powerbackup=$this->input->post('powerbackup');
+            $verified=$this->input->post('verified');
+            $status=$this->input->post('status');
+            $reportmessage=$this->input->post('reportmessage');
+            $commitescore=$this->input->post('commitescore');
+            $localityscore=$this->input->post('localityscore');
+            $societyscore=$this->input->post('societyscore');
+            $possesion=$this->input->post('possesion');
+            $aerialview=$this->input->post('aerialview');
+            $insights=$this->input->post('insights');
+            $pricetrends=$this->input->post('pricetrends');
+            $yearofestablishment=$this->input->post('yearofestablishment');
+            $totalproject=$this->input->post('totalproject');
+            $associatemembership=$this->input->post('associatemembership');
+            $interior=$this->input->post('interior');
+            $threedfloorplan=$this->input->post('threedfloorplan');
+//            $twodfloorplan=$this->input->post('twodfloorplan');
+            $iscommercial=$this->input->post('iscommercial');
+            $securitydeposite=$this->input->post('securitydeposite');
+            $societyfacility=$this->input->post('societyfacility');
+            $amenity=$this->input->post('amenity');
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1213,7 +1295,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->property_model->create($name,$image)==0)
+			if($this->property_model->create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)==0)
 			$data['alerterror']="New property could not be created.";
 			else
 			$data['alertsuccess']="property created Successfully.";
@@ -1226,10 +1308,28 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-		$data['page']='editproperty';
-		$data['title']='Edit property';
+        $data['societyfacility']=$this->societyfacility_model->getsocietyfacilitydropdown();
+        $data['amenity']=$this->amenity_model->getamenitydropdown();
+        $data['category']=$this->property_model->getcategorydropdown();
+        $data['builder']=$this->builder_model->getbuilderdropdown();
+        $data['listingowner']=$this->user_model->getlistingownerdropdown();
+        $data['listedby']=$this->property_model->getlistedbydropdown();
+        $data['furnishing']=$this->property_model->getfurnishingdropdown();
+        $data['leasetype']=$this->leasetype_model->getleasetypedropdown();
+        $data['propertytype']=$this->propertytype_model->getpropertytypedropdown();
+        $data['status']=$this->property_model->getstatusdropdown();
+        $data['negotiable']=$this->property_model->getnegotiabledropdown();
+        $data['bathroom']=$this->property_model->getbathroomdropdown();
+        $data['bhk']=$this->property_model->getbhkdropdown();
+        $data['iscommercial']=$this->property_model->getiscommercialdropdown();
+        $data['verified']=$this->property_model->getverifieddropdown();
 		$data['before']=$this->property_model->beforeedit($this->input->get('id'));
-		$this->load->view('template',$data);
+        $data['selectedsocietyfacility']=$this->property_model->getsocietyfacilitybyproperty($this->input->get_post('id'));
+        $data['selectedamenity']=$this->property_model->getamenitybyproperty($this->input->get_post('id'));
+		$data['page']='editproperty';
+		$data['page2']='block/propertyblock';
+		$data['title']='Edit property';
+		$this->load->view('templatewith2',$data);
 	}
 	function editpropertysubmit()
 	{
@@ -1237,11 +1337,62 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		
 		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('email','Email','trim|required|valid_email');
+		$this->form_validation->set_rules('price','price','trim');
+		$this->form_validation->set_rules('category','category','trim');
+		$this->form_validation->set_rules('builder','builder','trim');
+		$this->form_validation->set_rules('listingowner','listingowner','trim');
+		$this->form_validation->set_rules('leasetype','leasetype','trim');
+		$this->form_validation->set_rules('propertytype','propertytype','trim');
+		$this->form_validation->set_rules('bathroom','bathroom','trim');
+		$this->form_validation->set_rules('negotiable','negotiable','trim');
+		$this->form_validation->set_rules('bhk','bhk','trim');
+		$this->form_validation->set_rules('address1','address1','trim');
+		$this->form_validation->set_rules('address2','address2','trim');
+		$this->form_validation->set_rules('locality','locality','trim');
+		$this->form_validation->set_rules('city','city','trim');
+		$this->form_validation->set_rules('pincode','pincode','trim');
+		$this->form_validation->set_rules('builduparea','builduparea','trim');
+		$this->form_validation->set_rules('carpetarea','carpetarea','trim');
+		$this->form_validation->set_rules('facing','facing','trim');
+		$this->form_validation->set_rules('powerbackup','powerbackup','trim');
+		$this->form_validation->set_rules('verified','verified','trim');
+		$this->form_validation->set_rules('status','status','trim');
+		$this->form_validation->set_rules('reportmessage','reportmessage','trim');
+		$this->form_validation->set_rules('commitecode','commitecode','trim');
+		$this->form_validation->set_rules('localityscore','localityscore','trim');
+		$this->form_validation->set_rules('societyscore','societyscore','trim');
+		$this->form_validation->set_rules('possesion','possesion','trim');
+		$this->form_validation->set_rules('aerialview','aerialview','trim');
+		$this->form_validation->set_rules('insights','insights','trim');
+		$this->form_validation->set_rules('pricetrends','pricetrends','trim');
+		$this->form_validation->set_rules('yearofestablishment','yearofestablishment','trim');
+		$this->form_validation->set_rules('totalproject','totalproject','trim');
+		$this->form_validation->set_rules('associatemembership','associatemembership','trim');
+		$this->form_validation->set_rules('interior','interior','trim');
+		$this->form_validation->set_rules('threedfloorplan','3Dfloorplan','trim');
+		$this->form_validation->set_rules('iscommercial','iscommercial','trim');
+		$this->form_validation->set_rules('securitydeposite','securitydeposite','trim');
 		if($this->form_validation->run() == FALSE)	
 		{
 			$data['alerterror'] = validation_errors();
 			$data['page']='editproperty';
+            $data['category']=$this->property_model->getcategorydropdown();
+            $data['builder']=$this->builder_model->getbuilderdropdown();
+            $data['listingowner']=$this->user_model->getlistingownerdropdown();
+            $data['listedby']=$this->property_model->getlistedbydropdown();
+            $data['furnishing']=$this->property_model->getfurnishingdropdown();
+            $data['leasetype']=$this->leasetype_model->getleasetypedropdown();
+            $data['propertytype']=$this->propertytype_model->getpropertytypedropdown();
+            $data['status']=$this->property_model->getstatusdropdown();
+            $data['negotiable']=$this->property_model->getnegotiabledropdown();
+            $data['bathroom']=$this->property_model->getbathroomdropdown();
+            $data['bhk']=$this->property_model->getbhkdropdown();
+            $data['iscommercial']=$this->property_model->getiscommercialdropdown();
+            $data['verified']=$this->property_model->getverifieddropdown();
             $data['before']=$this->property_model->beforeedit($this->input->get('id'));
+            $data['selectedsocietyfacility']=$this->property_model->getsocietyfacilitybyproperty($this->input->get_post('id'));
+            $data['selectedamenity']=$this->property_model->getamenitybyproperty($this->input->get_post('id'));
 			$data['title']='Edit property';
 			$this->load->view('template',$data);
 		}
@@ -1249,7 +1400,48 @@ class Site extends CI_Controller
 		{
             
             $id=$this->input->get_post('id');
-            $name=$this->input->get_post('name');
+            $name=$this->input->post('name');
+            $email=$this->input->post('email');
+            $category=$this->input->post('category');
+            $builder=$this->input->post('builder');
+            $listingowner=$this->input->post('listingowner');
+            $price=$this->input->post('price');
+            $leasetype=$this->input->post('leasetype');
+            $listedby=$this->input->post('listedby');
+            $furnishing=$this->input->post('furnishing');
+            $propertytype=$this->input->post('propertytype');
+            $bathroom=$this->input->post('bathroom');
+            $negotiable=$this->input->post('negotiable');
+            $bhk=$this->input->post('bhk');
+            $address1=$this->input->post('address1');
+            $address2=$this->input->post('address2');
+            $locality=$this->input->post('locality');
+            $city=$this->input->post('city');
+            $pincode=$this->input->post('pincode');
+            $builduparea=$this->input->post('builduparea');
+            $carpetarea=$this->input->post('carpetarea');
+            $facing=$this->input->post('facing');
+            $powerbackup=$this->input->post('powerbackup');
+            $verified=$this->input->post('verified');
+            $status=$this->input->post('status');
+            $reportmessage=$this->input->post('reportmessage');
+            $commitescore=$this->input->post('commitescore');
+            $localityscore=$this->input->post('localityscore');
+            $societyscore=$this->input->post('societyscore');
+            $possesion=$this->input->post('possesion');
+            $aerialview=$this->input->post('aerialview');
+            $insights=$this->input->post('insights');
+            $pricetrends=$this->input->post('pricetrends');
+            $yearofestablishment=$this->input->post('yearofestablishment');
+            $totalproject=$this->input->post('totalproject');
+            $associatemembership=$this->input->post('associatemembership');
+            $interior=$this->input->post('interior');
+            $threedfloorplan=$this->input->post('threedfloorplan');
+//            $twodfloorplan=$this->input->post('twodfloorplan');
+            $iscommercial=$this->input->post('iscommercial');
+            $securitydeposite=$this->input->post('securitydeposite');
+            $societyfacility=$this->input->post('societyfacility');
+            $amenity=$this->input->post('amenity');
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1285,16 +1477,15 @@ class Site extends CI_Controller
             if($image=="")
             {
                 $image=$this->property_model->getpropertyimagebyid($id);
-                $image=$image->image;
+                $image=$image->floorplan2d;
             }
             
-			if($this->property_model->edit($id,$name,$image)==0)
+			if($this->property_model->edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)==0)
 			$data['alerterror']="property Editing was unsuccesful";
 			else
 			$data['alertsuccess']="property edited Successfully.";
 			
 			$data['redirect']="site/viewproperty";
-			//$data['other']="template=$template";
 			$this->load->view("redirect",$data);
 			
 		}
@@ -1307,6 +1498,194 @@ class Site extends CI_Controller
 		$this->property_model->deleteproperty($this->input->get('id'));
 		$data['alertsuccess']="property Deleted Successfully";
 		$data['redirect']="site/viewproperty";
+		$this->load->view("redirect",$data);
+	}
+    
+    
+    //propertyimage
+    
+    function viewpropertyimage()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+		$data['before']=$this->property_model->beforeedit($propertyid);
+		$data['table']=$this->propertyimage_model->viewpropertyimagebyproperty($propertyid);
+		$data['page']='viewpropertyimage';
+		$data['page2']='block/propertyblock';
+        $data['title']='View property Image';
+		$this->load->view('templatewith2',$data);
+	}
+    
+    
+    
+    public function createpropertyimage()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createpropertyimage';
+		$data[ 'title' ] = 'Create propertyimage';
+		$data[ 'propertyid' ] = $this->input->get('id');
+//        $data['property']=$this->propertyimage_model->getpropertydropdown();
+		$this->load->view( 'template', $data );	
+	}
+    function createpropertyimagesubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('property','property','trim|required');
+
+		if($this->form_validation->run() == FALSE)	
+		{
+            
+			$data['alerterror'] = validation_errors();
+			$data[ 'page' ] = 'createpropertyimage';
+            $data[ 'title' ] = 'Create propertyimage';
+            $data[ 'propertyid' ] = $this->input->get_post('id');
+//            $data['property']=$this->propertyimage_model->getpropertydropdown();
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+			$property=$this->input->post('property');
+           
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+            
+            
+            if($this->propertyimage_model->create($property,$image)==0)
+               $data['alerterror']="New propertyimage could not be created.";
+            else
+               $data['alertsuccess']="propertyimage created Successfully.";
+			
+			$data['redirect']="site/viewpropertyimage?id=".$property;
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+    function editpropertyimage()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+        $data['propertyid']=$propertyid;
+        $propertyimageid=$this->input->get('propertyimageid');
+		$data['before']=$this->propertyimage_model->beforeedit($this->input->get('propertyimageid'));
+        $data['property']=$this->propertyimage_model->getpropertydropdown();
+		$data['page']='editpropertyimage';
+		$data['title']='Edit propertyimage';
+		$this->load->view('template',$data);
+	}
+	function editpropertyimagesubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+		$this->form_validation->set_rules('property','property','trim|required');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $propertyid=$this->input->post('property');
+            $propertyimageid=$this->input->post('propertyimageid');
+            $data['propertyid']=$propertyid;
+			$data['before']=$this->propertyimage_model->beforeedit($this->input->post('propertyimageid'));
+            $data['property']=$this->propertyimage_model->getpropertydropdown();
+//			$data['page2']='block/eventblock';
+			$data['page']='editpropertyimage';
+			$data['title']='Edit propertyimage';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+			$id=$this->input->post('propertyimageid');
+            $property=$this->input->post('property');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+            if($image=="")
+            {
+                $image=$this->propertyimage_model->getpropertyimagebyid($id);
+                $image=$image->image;
+            }
+            
+			if($this->propertyimage_model->edit($id,$property,$image)==0)
+			$data['alerterror']="propertyimage Editing was unsuccesful";
+			else
+			$data['alertsuccess']="propertyimage edited Successfully.";
+			
+			$data['redirect']="site/viewpropertyimage?id=".$property;
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+    
+	function deletepropertyimage()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+        $propertyimageid=$this->input->get('propertyimageid');
+		$this->propertyimage_model->deletepropertyimage($this->input->get('propertyimageid'));
+		$data['alertsuccess']="propertyimage Deleted Successfully";
+		$data['redirect']="site/viewpropertyimage?id=".$propertyid;
 		$this->load->view("redirect",$data);
 	}
     

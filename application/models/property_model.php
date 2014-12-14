@@ -3,37 +3,89 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class Property_model extends CI_Model
 {
-	public function create($name,$email,$contact,$line1,$line2,$line3,$city,$state,$pincode,$country,$landmark,$vat,$tin,$pan,$color1,$color2,$theme,$image,$user)
+	public function create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)
 	{
+        
+//        INSERT INTO `property`(`id`, `name`, `email`, `category`, `builder`, `listingowner`, `price`, `leasetype`, `listedby`, `furnishing`, `propertytype`, `timestamp`, `bathroom`, `negotiable`, `securitydeposite`, `bhk`, `address1`, `address2`, `locality`, `city`, `pincode`, `builduparea`, `carpetarea`, `facing`, `powerbackup`, `verified`, `status`, `reportmessage`, `commitescore`, `localityscore`, `societyscore`, `possesion`, `aerialview`, `insights`, `pricetrends`, `yearofestablishment`, `totalprojects`, `associatemembership`, `interior`, `3dfloorplan`, `2dfloorplan`, `iscommercial`)
 		$data  = array(
 			'name' => $name,
 			'email' => $email,
-            'contact' => $contact,
-			'line1' => $line1,
-			'line2' => $line2,
-			'line3' => $line3,
+            'category' => $category,
+			'builder' => $builder,
+			'listingowner' => $listingowner,
+			'price' => $price,
+			'leasetype' => $leasetype,
+			'listedby' => $listedby,
+			'furnishing' => $furnishing,
+			'propertytype' => $propertytype,
+			'bathroom' => $bathroom,
+			'negotiable' => $negotiable,
+			'securitydeposite' => $securitydeposite,
+			'bhk' => $bhk,
+			'address1' => $address1,
+			'address2' => $address2,
+			'locality' => $locality,
 			'city' => $city,
-			'state' => $state,
 			'pincode' => $pincode,
-			'country' => $country,
-			'landmark' => $landmark,
-			'vat' => $vat,
-			'tin' => $tin,
-			'pan' => $pan,
-			'color1' => $color1,
-			'color2' => $color2,
-			'theme' => $theme,
-			'user' => $user,
-			'logo' => $image
+			'builduparea' => $builduparea,
+			'carpetarea' => $carpetarea,
+			'facing' => $facing,
+			'powerbackup' => $powerbackup,
+			'verified' => $verified,
+			'status' => $status,
+			'reportmessage' => $reportmessage,
+			'commitescore' => $commitescore,
+			'localityscore' => $localityscore,
+			'societyscore' => $societyscore,
+			'possesion' => $possesion,
+			'aerialview' => $aerialview,
+			'insights' => $insights,
+			'pricetrends' => $pricetrends,
+			'yearofestablishment' => $yearofestablishment,
+			'totalprojects' => $totalproject,
+			'associatemembership' => $associatemembership,
+			'interior' => $interior,
+			'floorplan3d' => $threedfloorplan,
+			'floorplan2d' => $image,
+			'iscommercial' => $iscommercial
 		);
 		$query=$this->db->insert( 'property', $data );
-		$id=$this->db->insert_id();
+		$propertyid=$this->db->insert_id();
+        foreach($societyfacility AS $key=>$value)
+        {
+            $this->property_model->createpropertysocietyfacility($value,$propertyid);
+        }
+        foreach($amenity AS $key=>$value)
+        {
+            $this->property_model->createpropertyamenity($value,$propertyid);
+        }
 		
 		if(!$query)
 			return  0;
 		else
 			return  1;
 	}
+    
+    public function createpropertysocietyfacility($value,$propertyid)
+	{
+		$data  = array(
+			'societyfacility' => $value,
+			'property' => $propertyid
+		);
+		$query=$this->db->insert( 'propertysocietyfacility', $data );
+		return  1;
+	}
+    
+    public function createpropertyamenity($value,$propertyid)
+	{
+		$data  = array(
+			'amenity' => $value,
+			'property' => $propertyid
+		);
+		$query=$this->db->insert( 'propertyamenity', $data );
+		return  1;
+	}
+    
 	function viewproperty()
 	{
 		$query="SELECT `property`.`id`, `property`.`user`, `property`.`name`, `property`.`email`, `property`.`contact`, `property`.`line1`, `property`.`line2`, `property`.`line3`, `property`.`city`,`property`. `state`, `property`.`pincode`, `property`.`country`, `property`.`landmark`, `property`.`vat`, `property`.`tin`, `property`.`pan`, `property`.`logo`,`property`. `color1`, `property`.`color2`, `property`.`theme` ,`user`.`firstname`,`user`.`lastname`,`theme`.`name` as `themename`
@@ -51,31 +103,62 @@ class Property_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$email,$contact,$line1,$line2,$line3,$city,$state,$pincode,$country,$landmark,$vat,$tin,$pan,$color1,$color2,$theme,$image,$user)
+	public function edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)
 	{
 		$data  = array(
 			'name' => $name,
 			'email' => $email,
-            'contact' => $contact,
-			'line1' => $line1,
-			'line2' => $line2,
-			'line3' => $line3,
+            'category' => $category,
+			'builder' => $builder,
+			'listingowner' => $listingowner,
+			'price' => $price,
+			'leasetype' => $leasetype,
+			'listedby' => $listedby,
+			'furnishing' => $furnishing,
+			'propertytype' => $propertytype,
+			'bathroom' => $bathroom,
+			'negotiable' => $negotiable,
+			'securitydeposite' => $securitydeposite,
+			'bhk' => $bhk,
+			'address1' => $address1,
+			'address2' => $address2,
+			'locality' => $locality,
 			'city' => $city,
-			'state' => $state,
 			'pincode' => $pincode,
-			'country' => $country,
-			'landmark' => $landmark,
-			'vat' => $vat,
-			'tin' => $tin,
-			'pan' => $pan,
-			'color1' => $color1,
-			'color2' => $color2,
-			'theme' => $theme,
-			'user' => $user,
-			'logo' => $image
+			'builduparea' => $builduparea,
+			'carpetarea' => $carpetarea,
+			'facing' => $facing,
+			'powerbackup' => $powerbackup,
+			'verified' => $verified,
+			'status' => $status,
+			'reportmessage' => $reportmessage,
+			'commitescore' => $commitescore,
+			'localityscore' => $localityscore,
+			'societyscore' => $societyscore,
+			'possesion' => $possesion,
+			'aerialview' => $aerialview,
+			'insights' => $insights,
+			'pricetrends' => $pricetrends,
+			'yearofestablishment' => $yearofestablishment,
+			'totalprojects' => $totalproject,
+			'associatemembership' => $associatemembership,
+			'interior' => $interior,
+			'floorplan3d' => $threedfloorplan,
+			'floorplan2d' => $image,
+			'iscommercial' => $iscommercial
 		);
 		$this->db->where( 'id', $id );
 		$query=$this->db->update( 'property', $data );
+        $querydelete=$this->db->query("DELETE FROM `propertysocietyfacility` WHERE `property`='$id'");
+        $querydelete=$this->db->query("DELETE FROM `propertyamenity` WHERE `property`='$id'");
+        foreach($societyfacility AS $key=>$value)
+        {
+            $this->property_model->createpropertysocietyfacility($value,$id);
+        }
+        foreach($amenity AS $key=>$value)
+        {
+            $this->property_model->createpropertyamenity($value,$id);
+        }
 		return 1;
 	}
 	function deleteproperty($id)
@@ -97,7 +180,7 @@ class Property_model extends CI_Model
 	}
 	public function getpropertyimagebyid($id)
 	{
-		$query=$this->db->query("SELECT `logo` FROM `property` WHERE `id`='$id'")->row();
+		$query=$this->db->query("SELECT `floorplan2d` FROM `property` WHERE `id`='$id'")->row();
 		return $query;
 	}
     
@@ -198,6 +281,39 @@ class Property_model extends CI_Model
 			 "No" => "No"
 			);
 		return $verified;
+	}
+    
+     public function getsocietyfacilitybyproperty($id)
+	{
+         $return=array();
+		$query=$this->db->query("SELECT `id`,`property`,`societyfacility` FROM `propertysocietyfacility`  WHERE `property`='$id'");
+        if($query->num_rows() > 0)
+        {
+            $query=$query->result();
+            foreach($query as $row)
+            {
+                $return[]=$row->societyfacility;
+            }
+        }
+         return $return;
+         
+		
+	}
+     public function getamenitybyproperty($id)
+	{
+         $return=array();
+		$query=$this->db->query("SELECT `id`,`property`,`amenity` FROM `propertyamenity`  WHERE `property`='$id'");
+        if($query->num_rows() > 0)
+        {
+            $query=$query->result();
+            foreach($query as $row)
+            {
+                $return[]=$row->amenity;
+            }
+        }
+         return $return;
+         
+		
 	}
 }
 ?>

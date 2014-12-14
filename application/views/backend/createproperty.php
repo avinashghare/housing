@@ -106,6 +106,13 @@
 				  </div>
 				</div>
 				
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="normal-field">Security Deposite</label>
+				  <div class="col-sm-4">
+					<input type="text" id="normal-field" class="form-control" name="securitydeposite" value="<?php echo set_value('securitydeposite');?>">
+				  </div>
+				</div>
+				
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label">Select BHK</label>
 				  <div class="col-sm-4">
@@ -284,15 +291,8 @@
 				  </div>
 				</div>
 				
-				<div class="form-group">
-				  <label class="col-sm-2 control-label" for="normal-field">2Dfloorplan</label>
-				  <div class="col-sm-4">
-					<input type="text" id="normal-field" class="form-control" name="twodfloorplan" value="<?php echo set_value('twodfloorplan');?>">
-				  </div>
-				</div>
-				
 				<div class=" form-group">
-				  <label class="col-sm-2 control-label" for="normal-field">Image</label>
+				  <label class="col-sm-2 control-label" for="normal-field">2Dfloorplan</label>
 				  <div class="col-sm-4">
 					<input type="file" id="normal-field" class="form-control" name="image" value="<?php echo set_value('image');?>">
 				  </div>
@@ -304,7 +304,26 @@
 					<?php 	 echo form_dropdown('iscommercial',$iscommercial,set_value('iscommercial'),'id="iscommercialid" class="chzn-select form-control" 	data-placeholder="Choose a iscommercial..."');
 					?>
 				  </div>
-				</div
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Society Facilities</label>
+				  <div class="col-sm-4">
+					<?php
+						
+						echo form_dropdown('societyfacility[]',$societyfacility,set_value('societyfacility'),'id="select2" class="chzn-select form-control" 	data-placeholder="Choose a Society Facility..." multiple');
+					?>
+				  </div>
+				</div>
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Amenities</label>
+				  <div class="col-sm-4">
+					<?php
+						
+						echo form_dropdown('amenity[]',$amenity,set_value('amenity'),'id="select3" class="chzn-select form-control" 	data-placeholder="Choose an Amenity..." multiple');
+					?>
+				  </div>
+				</div>
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label">&nbsp;</label>
 				  <div class="col-sm-4">
