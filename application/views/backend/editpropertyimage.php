@@ -8,14 +8,14 @@
 			<div class="panel-body">
 				<form class="form-horizontal row-fluid" method="post" action="<?php echo site_url('site/editpropertyimagesubmit');?>" enctype= "multipart/form-data">
 				
-				<div class="form-group">
+				<div class="form-group" style="display:none">
 				  <label class="col-sm-2 control-label" for="normal-field">property</label>
 				  <div class="col-sm-4">
 					<input type="text" id="normal-field" class="form-control" name="property" value="<?php echo set_value('property',$before->property);?>">
 					
 				  </div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="display:none">
 				  <label class="col-sm-2 control-label" for="normal-field">propertyimage</label>
 				  <div class="col-sm-4">
 					<input type="text" id="normal-field" class="form-control" name="propertyimageid" value="<?php echo set_value('propertyimageid',$before->id);?>">

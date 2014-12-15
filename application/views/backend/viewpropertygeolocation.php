@@ -1,7 +1,7 @@
 <div class=" row" style="padding:1% 0;">
 	<div class="col-md-12">
 	
-		<a class="btn btn-primary pull-right"  href="<?php echo site_url('site/createpropertyimage?id=').$this->input->get('id'); ?>"><i class="icon-plus"></i>Create </a> &nbsp; 
+		<a class="btn btn-primary pull-right"  href="<?php echo site_url('site/createpropertygeolocation?id=').$this->input->get('id'); ?>"><i class="icon-plus"></i>Create </a> &nbsp; 
 	</div>
 	
 </div>
@@ -9,14 +9,15 @@
 	<div class="col-lg-12">
 		<section class="panel">
 			<header class="panel-heading">
-                property Image Details 
+                Property Geo Location Details 
             </header>
 			<table class="table table-striped table-hover  fpTable lcnp" cellpadding="0" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>Id</th>
 					<th>Property</th>
-					<th>Image</th>
+					<th>Latitude</th>
+					<th>Longitude</th>
 					<th> Actions </th>
 				</tr>
 			</thead>
@@ -25,13 +26,14 @@
 					<tr>
 						<td><?php echo $row->id;?></td>
 						<td><?php echo $row->propertyname;?></td>
-						<td><img src="<?php echo base_url('uploads')."/".$row->image; ?>" width="50px" height="auto"></td>
+						<td><?php echo $row->lat;?></td>
+						<td><?php echo $row->long;?></td>
 						
 						<td>
-							<a href="<?php echo site_url('site/editpropertyimage?id=').$row->property.'&propertyimageid='.$row->id;?>" class="btn btn-primary btn-xs">
+							<a href="<?php echo site_url('site/editpropertygeolocation?id=').$row->property.'&propertygeolocationid='.$row->id;?>" class="btn btn-primary btn-xs">
 								<i class="icon-pencil"></i>
 							</a>
-							<a href="<?php echo site_url('site/deletepropertyimage?id=').$row->property.'&propertyimageid='.$row->id; ?>" class="btn btn-danger btn-xs">
+							<a href="<?php echo site_url('site/deletepropertygeolocation?id=').$row->property.'&propertygeolocationid='.$row->id; ?>" class="btn btn-danger btn-xs">
 								<i class="icon-trash "></i>
 							</a> 
 							

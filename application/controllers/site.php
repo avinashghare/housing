@@ -1689,6 +1689,268 @@ class Site extends CI_Controller
 		$this->load->view("redirect",$data);
 	}
     
+    //propertygeolocation
+    
+    function viewpropertygeolocation()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+		$data['before']=$this->property_model->beforeedit($propertyid);
+		$data['table']=$this->propertygeolocation_model->viewpropertygeolocationbyproperty($propertyid);
+		$data['page']='viewpropertygeolocation';
+		$data['page2']='block/propertyblock';
+        $data['title']='View property Image';
+		$this->load->view('templatewith2',$data);
+	}
+    
+    
+    
+    public function createpropertygeolocation()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createpropertygeolocation';
+		$data[ 'title' ] = 'Create propertygeolocation';
+		$data[ 'propertyid' ] = $this->input->get('id');
+		$this->load->view( 'template', $data );	
+	}
+    function createpropertygeolocationsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('property','property','trim|required');
+		$this->form_validation->set_rules('lat','lat','trim|required');
+		$this->form_validation->set_rules('long','long','trim|required');
+
+		if($this->form_validation->run() == FALSE)	
+		{
+            
+			$data['alerterror'] = validation_errors();
+			$data[ 'page' ] = 'createpropertygeolocation';
+            $data[ 'title' ] = 'Create propertygeolocation';
+            $data[ 'propertyid' ] = $this->input->get_post('id');
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+			$property=$this->input->post('property');
+			$lat=$this->input->post('lat');
+			$long=$this->input->post('long');
+           
+            
+            if($this->propertygeolocation_model->create($property,$lat,$long)==0)
+               $data['alerterror']="New propertygeolocation could not be created.";
+            else
+               $data['alertsuccess']="propertygeolocation created Successfully.";
+			
+			$data['redirect']="site/viewpropertygeolocation?id=".$property;
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+    function editpropertygeolocation()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+        $data['propertyid']=$propertyid;
+        $propertygeolocationid=$this->input->get('propertygeolocationid');
+		$data['before']=$this->propertygeolocation_model->beforeedit($this->input->get('propertygeolocationid'));
+        $data['property']=$this->propertygeolocation_model->getpropertydropdown();
+		$data['page']='editpropertygeolocation';
+		$data['title']='Edit propertygeolocation';
+		$this->load->view('template',$data);
+	}
+	function editpropertygeolocationsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+		$this->form_validation->set_rules('property','property','trim|required');
+		$this->form_validation->set_rules('lat','lat','trim|required');
+		$this->form_validation->set_rules('long','long','trim|required');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $propertyid=$this->input->post('property');
+            $propertygeolocationid=$this->input->post('propertygeolocationid');
+            $data['propertyid']=$propertyid;
+			$data['before']=$this->propertygeolocation_model->beforeedit($this->input->post('propertygeolocationid'));
+            $data['property']=$this->propertygeolocation_model->getpropertydropdown();
+			$data['page']='editpropertygeolocation';
+			$data['title']='Edit propertygeolocation';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+			$id=$this->input->post('propertygeolocationid');
+            $property=$this->input->post('property');
+            $lat=$this->input->post('lat');
+            $long=$this->input->post('long');
+            
+			if($this->propertygeolocation_model->edit($id,$property,$lat,$long)==0)
+			$data['alerterror']="propertygeolocation Editing was unsuccesful";
+			else
+			$data['alertsuccess']="propertygeolocation edited Successfully.";
+			
+			$data['redirect']="site/viewpropertygeolocation?id=".$property;
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+    
+	function deletepropertygeolocation()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+        $propertygeolocationid=$this->input->get('propertygeolocationid');
+		$this->propertygeolocation_model->deletepropertygeolocation($this->input->get('propertygeolocationid'));
+		$data['alertsuccess']="propertygeolocation Deleted Successfully";
+		$data['redirect']="site/viewpropertygeolocation?id=".$propertyid;
+		$this->load->view("redirect",$data);
+	}
+    
+    //propertyenquiry
+    
+    function viewpropertyenquiry()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+		$data['before']=$this->property_model->beforeedit($propertyid);
+		$data['table']=$this->propertyenquiry_model->viewpropertyenquirybyproperty($propertyid);
+		$data['page']='viewpropertyenquiry';
+		$data['page2']='block/propertyblock';
+        $data['title']='View property Image';
+		$this->load->view('templatewith2',$data);
+	}
+    
+    
+    
+    public function createpropertyenquiry()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createpropertyenquiry';
+		$data[ 'title' ] = 'Create propertyenquiry';
+		$data['user']=$this->user_model->getuserdropdown();
+		$data[ 'propertyid' ] = $this->input->get('id');
+		$this->load->view( 'template', $data );	
+	}
+    function createpropertyenquirysubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('property','property','trim|required');
+		$this->form_validation->set_rules('message','message','trim');
+		$this->form_validation->set_rules('user','user','trim');
+		$this->form_validation->set_rules('contact','contact','trim');
+		$this->form_validation->set_rules('email','email','trim');
+
+		if($this->form_validation->run() == FALSE)	
+		{
+            
+			$data['alerterror'] = validation_errors();
+			$data[ 'page' ] = 'createpropertyenquiry';
+            $data[ 'title' ] = 'Create propertyenquiry';
+            $data['user']=$this->user_model->getuserdropdown();
+            $data[ 'propertyid' ] = $this->input->get_post('id');
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+			$property=$this->input->post('property');
+			$message=$this->input->post('message');
+			$user=$this->input->post('user');
+			$contact=$this->input->post('contact');
+			$email=$this->input->post('email');
+           
+            
+            if($this->propertyenquiry_model->create($property,$message,$user,$contact,$email)==0)
+               $data['alerterror']="New propertyenquiry could not be created.";
+            else
+               $data['alertsuccess']="propertyenquiry created Successfully.";
+			
+			$data['redirect']="site/viewpropertyenquiry?id=".$property;
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+    function editpropertyenquiry()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+        $data['propertyid']=$propertyid;
+        $propertyenquiryid=$this->input->get('propertyenquiryid');
+		$data['user']=$this->user_model->getuserdropdown();
+		$data['before']=$this->propertyenquiry_model->beforeedit($this->input->get('propertyenquiryid'));
+        $data['property']=$this->propertyenquiry_model->getpropertydropdown();
+		$data['page']='editpropertyenquiry';
+		$data['title']='Edit propertyenquiry';
+		$this->load->view('template',$data);
+	}
+	function editpropertyenquirysubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+		$this->form_validation->set_rules('property','property','trim|required');
+		$this->form_validation->set_rules('message','message','trim');
+		$this->form_validation->set_rules('user','user','trim');
+		$this->form_validation->set_rules('contact','contact','trim');
+		$this->form_validation->set_rules('email','email','trim');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $propertyid=$this->input->post('property');
+            $propertyenquiryid=$this->input->post('propertyenquiryid');
+            $data['propertyid']=$propertyid;
+            $data['user']=$this->user_model->getuserdropdown();
+			$data['before']=$this->propertyenquiry_model->beforeedit($this->input->post('propertyenquiryid'));
+            $data['property']=$this->propertyenquiry_model->getpropertydropdown();
+			$data['page']='editpropertyenquiry';
+			$data['title']='Edit propertyenquiry';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+			$id=$this->input->post('propertyenquiryid');
+            $property=$this->input->post('property');
+			$message=$this->input->post('message');
+			$user=$this->input->post('user');
+			$contact=$this->input->post('contact');
+			$email=$this->input->post('email');
+            
+			if($this->propertyenquiry_model->edit($id,$property,$message,$user,$contact,$email)==0)
+			$data['alerterror']="propertyenquiry Editing was unsuccesful";
+			else
+			$data['alertsuccess']="propertyenquiry edited Successfully.";
+			
+			$data['redirect']="site/viewpropertyenquiry?id=".$property;
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+    
+	function deletepropertyenquiry()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $propertyid=$this->input->get('id');
+        $propertyenquiryid=$this->input->get('propertyenquiryid');
+		$this->propertyenquiry_model->deletepropertyenquiry($this->input->get('propertyenquiryid'));
+		$data['alertsuccess']="propertyenquiry Deleted Successfully";
+		$data['redirect']="site/viewpropertyenquiry?id=".$propertyid;
+		$this->load->view("redirect",$data);
+	}
+    
     
     
 }

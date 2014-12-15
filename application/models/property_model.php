@@ -164,6 +164,11 @@ class Property_model extends CI_Model
 	function deleteproperty($id)
 	{
 		$query=$this->db->query("DELETE FROM `property` WHERE `id`='$id'");
+//		$deletepropertyimages=$this->db->query("DELETE FROM `propertyimage` WHERE `property`='$id'");
+//		$deletepropertyimages=$this->db->query("DELETE FROM `propertysocietyfacility` WHERE `property`='$id'");
+//		$deletepropertyimages=$this->db->query("DELETE FROM `propertygeolocation` WHERE `property`='$id'");
+//		$deletepropertyimages=$this->db->query("DELETE FROM `propertyenquiry` WHERE `property`='$id'");
+//		$deletepropertyimages=$this->db->query("DELETE FROM `propertyamenity` WHERE `property`='$id'");
 	}
     
     public function getpropertydropdown()
