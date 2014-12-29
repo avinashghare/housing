@@ -51,6 +51,13 @@
 				</div>
 				
 				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Accesslevel</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('accesslevel',$accesslevel,set_value('accesslevel',$before->accesslevel),'class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
+					?>
+				  </div>
+				</div>
+				<div class=" form-group">
 				  <label class="col-sm-2 control-label">&nbsp;</label>
 				  <div class="col-sm-4">
 				  <button type="submit" class="btn btn-primary">Save</button>

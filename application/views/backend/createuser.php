@@ -29,13 +29,13 @@
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="description-field">Password</label>
 				  <div class="col-sm-4">
-					<input type="password" id="description-field" class="form-control" name="password" value="">
+					<input type="password" id="description-field" class="form-control" name="password" value="<?php echo set_value('password');?>">
 				  </div>
 				</div>
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="description-field">Confirm Password</label>
 				  <div class="col-sm-4">
-					<input type="password" id="description-field" class="form-control" name="confirmpassword" value="">
+					<input type="password" id="description-field" class="form-control" name="confirmpassword" value="<?php echo set_value('confirmpassword');?>">
 				  </div>
 				</div>
 				<div class=" form-group">
@@ -67,7 +67,7 @@
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label">Select Accesslevel</label>
 				  <div class="col-sm-4">
-					<?php 	 echo form_dropdown('accesslevel',$accesslevel,set_value('accesslevel'),'id="accesslevelid" onchange="operatorcategories()" class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
+					<?php 	 echo form_dropdown('accesslevel',$accesslevel,set_value('accesslevel'),'id="accesslevelid" class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
 					?>
 				  </div>
 				</div>
