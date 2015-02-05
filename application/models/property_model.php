@@ -320,5 +320,33 @@ class Property_model extends CI_Model
          
 		
 	}
+    public function getpropertybyid($id)
+    {
+    
+		$query['property']=$this->db->query("SELECT * FROM `property` WHERE `id`='$id'")->row();
+
+        $query['amenity']=$this->db->query("SELECT `propertyamenity`. `property`, `propertyamenity`.`amenity`,`amenity`.`name` AS `amenityname`,`property`.`name` AS `propertyname` 
+FROM `propertyamenity` 
+LEFT OUTER JOIN `amenity` ON `amenity`.`id`=`propertyamenity`.`amenity` 
+LEFT OUTER JOIN `property` ON `property`.`id`=`propertyamenity`.`property` 
+WHERE `propertyamenity`.`property`='$id'")->result();
+
+$query['societyfacility']=$this->db->query("SELECT `propertysocietyfacility`. `property`,`propertysocietyfacility`. `societyfacility`,`societyfacility`.`name` AS `societyfacilityname`
+FROM `propertysocietyfacility`
+LEFT OUTER JOIN `societyfacility` ON `societyfacility`.`id`=`propertysocietyfacility`.`societyfacility` 
+LEFT OUTER JOIN `property` ON `property`.`id`=`propertysocietyfacility`.`property` 
+WHERE `propertysocietyfacility`.`property`='$id'")->result();
+        
+$query['images']=$this->db->query("SELECT `image`
+FROM `propertyimage`
+WHERE `property`='$id'")->result();
+        
+$query['geolocation']=$this->db->query("SELECT `propertygeolocation`. `property`,`propertygeolocation`. `lat`, `propertygeolocation`.`long` 
+FROM `propertygeolocation` 
+LEFT OUTER JOIN `property` ON `property`.`id`=`propertygeolocation`.`property`
+WHERE `property`='$id'")->result();
+   
+		return $query;
+    }
 }
 ?>

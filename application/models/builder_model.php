@@ -32,6 +32,13 @@ class Builder_model extends CI_Model
 		return $query;
 	}
 	
+	public function getbuilderbyid( $id )
+	{
+		$query="SELECT `id`, `name`,`contact`,`email`,`address` FROM `builder` WHERE `id`='$id'";
+		$query=$this->db->query($query)->row();
+		return $query;
+	}
+	
 	public function edit($id,$name,$email,$contact,$address)
 	{
 		$data  = array(
