@@ -2415,6 +2415,218 @@ class Site extends CI_Controller
 		$this->load->view("redirect",$data);
 	}
     
+    //servicetype
+    function viewservicetype()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewservicetype';
+        $data['base_url'] = site_url("site/viewservicetypejson");
+        
+		$data['title']='View servicetype';
+		$this->load->view('template',$data);
+	} 
+    function viewservicetypejson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`servicetype`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`servicetype`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`servicetype`.`image`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Image";
+        $elements[2]->alias="image";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `servicetype`");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createservicetype()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createservicetype';
+		$data[ 'title' ] = 'Create servicetype';
+		$this->load->view( 'template', $data );	
+	}
+	function createservicetypesubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createservicetype';
+            $data[ 'title' ] = 'Create servicetype';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+            
+			if($this->servicetype_model->create($name,$image)==0)
+			$data['alerterror']="New servicetype could not be created.";
+			else
+			$data['alertsuccess']="servicetype created Successfully.";
+			$data['redirect']="site/viewservicetype";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editservicetype()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editservicetype';
+		$data['title']='Edit servicetype';
+		$data['before']=$this->servicetype_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editservicetypesubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('name','Name','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editservicetype';
+            $data['before']=$this->servicetype_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit servicetype';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->get_post('name');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+            
+            if($image=="")
+            {
+                $image=$this->servicetype_model->getservicetypeimagebyid($id);
+                $image=$image->image;
+            }
+            
+			if($this->servicetype_model->edit($id,$name,$image)==0)
+			$data['alerterror']="servicetype Editing was unsuccesful";
+			else
+			$data['alertsuccess']="servicetype edited Successfully.";
+			
+			$data['redirect']="site/viewservicetype";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deleteservicetype()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->servicetype_model->deleteservicetype($this->input->get('id'));
+		$data['alertsuccess']="servicetype Deleted Successfully";
+		$data['redirect']="site/viewservicetype";
+		$this->load->view("redirect",$data);
+	}
+    
+    
     
 }
 ?>
