@@ -361,7 +361,7 @@ WHERE `property`='$id'")->result();
      
 	public function getnewproperty()
 	{
-		$query=$this->db->query("SELECT  `property`.`id`  AS `id` ,  `property`.`name`  AS `name` ,  `property`.`email`  AS `email` ,  `category`.`name`  AS `categoryname` ,  `builder`.`name`  AS `buildername` ,  `property`.`price`  AS `price` ,  `property`.`bhk`  AS `bhk` ,  `property`.`address1`  AS `address1` ,  `property`.`address2`  AS `address2` ,  `property`.`city`  AS `city` ,`property`.`isnew`  AS `isnew` ,  `property`.`builduparea`  AS `builduparea` ,  `property`.`carpetarea`  AS `carpetarea` ,  1  
+		$query=$this->db->query("SELECT  `property`.`id`  AS `id` ,  `property`.`name`  AS `name` ,  `property`.`email`  AS `email` ,  `category`.`name`  AS `categoryname` ,  `builder`.`name`  AS `buildername` ,  `property`.`price`  AS `price` ,  `property`.`bhk`  AS `bhk` ,  `property`.`address1`  AS `address1` ,  `property`.`address2`  AS `address2` ,  `property`.`city`  AS `city` ,`property`.`isnew`  AS `isnew` ,  `property`.`builduparea`  AS `builduparea` ,  `property`.`carpetarea`  AS `carpetarea`,`property`.`floorplan2d`  AS `carpetarea`   
 FROM `property` 
 LEFT OUTER JOIN `category` ON `category`.`id`=`property`.`category` 
 LEFT OUTER JOIN `builder` ON `builder`.`id`=`property`.`builder`   
