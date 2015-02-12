@@ -37,6 +37,14 @@
 				</div>
 				
 				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Is New</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('isnew',$isnew,set_value('isnew',$before->isnew),'id="isnewid" class="chzn-select form-control" 	data-placeholder="Choose a isnew..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
 				  <label class="col-sm-2 control-label">Select listingowner</label>
 				  <div class="col-sm-4">
 					<?php 	 echo form_dropdown('listingowner',$listingowner,set_value('listingowner',$before->listingowner),'id="listingownerid" class="chzn-select form-control" 	data-placeholder="Choose a listingowner..."');

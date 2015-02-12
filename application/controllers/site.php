@@ -1151,6 +1151,7 @@ class Site extends CI_Controller
         $data['bhk']=$this->property_model->getbhkdropdown();
         $data['iscommercial']=$this->property_model->getiscommercialdropdown();
         $data['verified']=$this->property_model->getverifieddropdown();
+        $data['isnew']=$this->property_model->getisnewdropdown();
 		$data[ 'page' ] = 'createproperty';
 		$data[ 'title' ] = 'Create property';
 		$this->load->view( 'template', $data );	
@@ -1196,6 +1197,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('threedfloorplan','3Dfloorplan','trim');
 		$this->form_validation->set_rules('iscommercial','iscommercial','trim');
 		$this->form_validation->set_rules('securitydeposite','securitydeposite','trim');
+		$this->form_validation->set_rules('isnew','isnew','trim');
 		if($this->form_validation->run() == FALSE)	
 		{
 			$data['alerterror'] = validation_errors();
@@ -1263,6 +1265,7 @@ class Site extends CI_Controller
             $securitydeposite=$this->input->post('securitydeposite');
             $societyfacility=$this->input->post('societyfacility');
             $amenity=$this->input->post('amenity');
+            $isnew=$this->input->post('isnew');
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1295,7 +1298,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->property_model->create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)==0)
+			if($this->property_model->create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)==0)
 			$data['alerterror']="New property could not be created.";
 			else
 			$data['alertsuccess']="property created Successfully.";
@@ -1323,6 +1326,7 @@ class Site extends CI_Controller
         $data['bhk']=$this->property_model->getbhkdropdown();
         $data['iscommercial']=$this->property_model->getiscommercialdropdown();
         $data['verified']=$this->property_model->getverifieddropdown();
+        $data['isnew']=$this->property_model->getisnewdropdown();
 		$data['before']=$this->property_model->beforeedit($this->input->get('id'));
         $data['selectedsocietyfacility']=$this->property_model->getsocietyfacilitybyproperty($this->input->get_post('id'));
         $data['selectedamenity']=$this->property_model->getamenitybyproperty($this->input->get_post('id'));
@@ -1373,6 +1377,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('threedfloorplan','3Dfloorplan','trim');
 		$this->form_validation->set_rules('iscommercial','iscommercial','trim');
 		$this->form_validation->set_rules('securitydeposite','securitydeposite','trim');
+		$this->form_validation->set_rules('isnew','isnew','trim');
 		if($this->form_validation->run() == FALSE)	
 		{
 			$data['alerterror'] = validation_errors();
@@ -1391,6 +1396,7 @@ class Site extends CI_Controller
             $data['iscommercial']=$this->property_model->getiscommercialdropdown();
             $data['verified']=$this->property_model->getverifieddropdown();
             $data['before']=$this->property_model->beforeedit($this->input->get('id'));
+            $data['isnew']=$this->property_model->getisnewdropdown();
             $data['selectedsocietyfacility']=$this->property_model->getsocietyfacilitybyproperty($this->input->get_post('id'));
             $data['selectedamenity']=$this->property_model->getamenitybyproperty($this->input->get_post('id'));
 			$data['title']='Edit property';
@@ -1441,6 +1447,7 @@ class Site extends CI_Controller
             $iscommercial=$this->input->post('iscommercial');
             $securitydeposite=$this->input->post('securitydeposite');
             $societyfacility=$this->input->post('societyfacility');
+            $isnew=$this->input->post('isnew');
             $amenity=$this->input->post('amenity');
             
             $config['upload_path'] = './uploads/';
@@ -1480,7 +1487,7 @@ class Site extends CI_Controller
                 $image=$image->floorplan2d;
             }
             
-			if($this->property_model->edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)==0)
+			if($this->property_model->edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)==0)
 			$data['alerterror']="property Editing was unsuccesful";
 			else
 			$data['alertsuccess']="property edited Successfully.";
@@ -1951,6 +1958,462 @@ class Site extends CI_Controller
 		$this->load->view("redirect",$data);
 	}
     
+    //amenity
+    function viewtestimonial()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewtestimonial';
+        $data['base_url'] = site_url("site/viewtestimonialjson");
+        
+		$data['title']='View testimonial';
+		$this->load->view('template',$data);
+	} 
+    function viewtestimonialjson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`testimonial`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+//        $elements[1]=new stdClass();
+//        $elements[1]->field="`testimonial`.`name`";
+//        $elements[1]->sort="1";
+//        $elements[1]->header="Name";
+//        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`testimonial`.`user`";
+        $elements[2]->sort="1";
+        $elements[2]->header="User";
+        $elements[2]->alias="user";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`testimonial`.`testimonial`";
+        $elements[3]->sort="1";
+        $elements[3]->header="testimonial";
+        $elements[3]->alias="testimonial";
+        
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`user`.`name`";
+        $elements[4]->sort="1";
+        $elements[4]->header="Username";
+        $elements[4]->alias="username";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `testimonial` LEFT OUTER JOIN `user` ON `testimonial`.`user`=`user`.`id`");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createtestimonial()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createtestimonial';
+		$data[ 'title' ] = 'Create testimonial';
+		$data[ 'user' ] = $this->user_model->getuserdropdown();
+		$this->load->view( 'template', $data );	
+	}
+	function createtestimonialsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('user','User','trim|required');
+		$this->form_validation->set_rules('testimonial','Testimonial','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createtestimonial';
+            $data[ 'title' ] = 'Create testimonial';
+            $data[ 'user' ] = $this->user_model->getuserdropdown();
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $user=$this->input->post('user');
+            $testimonial=$this->input->post('testimonial');
+            
+			if($this->testimonial_model->create($user,$testimonial)==0)
+			$data['alerterror']="New testimonial could not be created.";
+			else
+			$data['alertsuccess']="testimonial created Successfully.";
+			$data['redirect']="site/viewtestimonial";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function edittestimonial()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='edittestimonial';
+		$data['title']='Edit testimonial';
+		$data[ 'user' ] = $this->user_model->getuserdropdown();
+		$data['before']=$this->testimonial_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function edittestimonialsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('user','User','trim|required');
+		$this->form_validation->set_rules('testimonial','Testimonial','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='edittestimonial';
+            $data[ 'user' ] = $this->user_model->getuserdropdown();
+            $data['before']=$this->testimonial_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit testimonial';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $user=$this->input->get_post('user');
+            $testimonial=$this->input->get_post('testimonial');
+            
+			if($this->testimonial_model->edit($id,$user,$testimonial)==0)
+			$data['alerterror']="testimonial Editing was unsuccesful";
+			else
+			$data['alertsuccess']="testimonial edited Successfully.";
+			
+			$data['redirect']="site/viewtestimonial";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deletetestimonial()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->testimonial_model->deletetestimonial($this->input->get('id'));
+		$data['alertsuccess']="testimonial Deleted Successfully";
+		$data['redirect']="site/viewtestimonial";
+		$this->load->view("redirect",$data);
+	}
+    
+    //config
+    function viewconfig()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewconfig';
+        $data['base_url'] = site_url("site/viewconfigjson");
+        
+		$data['title']='View config';
+		$this->load->view('template',$data);
+	} 
+    function viewconfigjson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`config`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`config`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`config`.`text`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Text";
+        $elements[2]->alias="text";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `config` ");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createconfig()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createconfig';
+		$data[ 'title' ] = 'Create config';
+		$this->load->view( 'template', $data );	
+	}
+	function createconfigsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','name','trim|required');
+		$this->form_validation->set_rules('text','text','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createconfig';
+            $data[ 'title' ] = 'Create config';
+            $data[ 'user' ] = $this->user_model->getuserdropdown();
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            $text=$this->input->post('text');
+            
+			if($this->config_model->create($name,$text)==0)
+			$data['alerterror']="New config could not be created.";
+			else
+			$data['alertsuccess']="config created Successfully.";
+			$data['redirect']="site/viewconfig";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editconfig()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editconfig';
+		$data['title']='Edit config';
+		$data['before']=$this->config_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editconfigsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('name','name','trim|required');
+		$this->form_validation->set_rules('text','text','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editconfig';
+            $data['before']=$this->config_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit config';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->get_post('name');
+            $text=$this->input->get_post('text');
+            
+			if($this->config_model->edit($id,$name,$text)==0)
+			$data['alerterror']="config Editing was unsuccesful";
+			else
+			$data['alertsuccess']="config edited Successfully.";
+			
+			$data['redirect']="site/viewconfig";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deleteconfig()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->config_model->deleteconfig($this->input->get('id'));
+		$data['alertsuccess']="config Deleted Successfully";
+		$data['redirect']="site/viewconfig";
+		$this->load->view("redirect",$data);
+	}
+    //video
+    function viewvideo()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewvideo';
+        $data['base_url'] = site_url("site/viewvideojson");
+        
+		$data['title']='View video';
+		$this->load->view('template',$data);
+	} 
+    function viewvideojson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`video`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`video`.`title`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Title";
+        $elements[1]->alias="title";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`video`.`video`";
+        $elements[2]->sort="1";
+        $elements[2]->header="video";
+        $elements[2]->alias="video";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `video` ");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createvideo()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createvideo';
+		$data[ 'title' ] = 'Create video';
+		$this->load->view( 'template', $data );	
+	}
+	function createvideosubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('title','title','trim|required');
+		$this->form_validation->set_rules('video','video','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createvideo';
+            $data[ 'title' ] = 'Create video';
+            $data[ 'user' ] = $this->user_model->getuserdropdown();
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $title=$this->input->post('title');
+            $video=$this->input->post('video');
+            
+			if($this->video_model->create($title,$video)==0)
+			$data['alerterror']="New video could not be created.";
+			else
+			$data['alertsuccess']="video created Successfully.";
+			$data['redirect']="site/viewvideo";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editvideo()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editvideo';
+		$data['title']='Edit video';
+		$data['before']=$this->video_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editvideosubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('title','title','trim|required');
+		$this->form_validation->set_rules('video','video','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editvideo';
+            $data['before']=$this->video_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit video';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $title=$this->input->get_post('title');
+            $video=$this->input->get_post('video');
+            
+			if($this->video_model->edit($id,$title,$video)==0)
+			$data['alerterror']="video Editing was unsuccesful";
+			else
+			$data['alertsuccess']="video edited Successfully.";
+			
+			$data['redirect']="site/viewvideo";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deletevideo()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->video_model->deletevideo($this->input->get('id'));
+		$data['alertsuccess']="video Deleted Successfully";
+		$data['redirect']="site/viewvideo";
+		$this->load->view("redirect",$data);
+	}
     
     
 }

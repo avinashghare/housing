@@ -72,6 +72,25 @@ class Propertyenquiry_model extends CI_Model
 		return $return;
 	}
     
+	public function addfrontendenquiry($userid,$propertyid,$message,$email,$contact)
+	{
+		$data  = array(
+			'property' => $propertyid,
+			'message' => $message,
+			'contact' => $contact,
+			'email' => $email,
+			'user' => $userid
+		);
+		$query=$this->db->insert( 'propertyenquiry', $data );
+		if($query)
+        {
+		return  1;
+        }
+        else
+        {
+        return 0;
+        }
+	}
     
 }
 ?>

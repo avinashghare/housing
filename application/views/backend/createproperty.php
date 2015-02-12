@@ -91,6 +91,14 @@
 				</div>
 				
 				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Is New</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('isnew',$isnew,set_value('isnew'),'id="isnewid" class="chzn-select form-control" 	data-placeholder="Choose a isnew..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
 				  <label class="col-sm-2 control-label">Select bathroom</label>
 				  <div class="col-sm-4">
 					<?php 	 echo form_dropdown('bathroom',$bathroom,set_value('bathroom'),'id="bathroomid" class="chzn-select form-control" 	data-placeholder="Choose a bathroom..."');

@@ -9,6 +9,13 @@ class Json extends CI_Controller
 		$this->load->view('json',$data);
     }
     
+	public function getbuilderbyid()
+    {
+        $id=$this->input->get_post('id');
+        $data['message']=$this->builder_model->beforeedit($id);
+		$this->load->view('json',$data);
+    }
+    
     function getallbuilders()
 	{
         $elements=array();
@@ -165,7 +172,42 @@ class Json extends CI_Controller
 	} 
     
     
+    public function addenquiry()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $userid=$data['userid'];
+        $propertyid=$data['propertyid'];
+        $message=$data['message'];
+        $email=$data['email'];
+        $contact=$data['contact'];
+        $data['message']=$this->propertyenquiry_model->addfrontendenquiry($userid,$propertyid,$message,$email,$contact);
+        $this->load->view('json',$data);
+    
+    }
     
     
+	public function gettestimonial()
+    {
+        $data['message']=$this->testimonial_model->gettestimonial();
+		$this->load->view('json',$data);
+    }
+	public function getsearchbackground()
+    {
+        $data['message']=$this->config_model->getsearchbackground();
+		$this->load->view('json',$data);
+    }
+    
+	public function getnewproperty()
+    {
+        $data['message']=$this->property_model->getnewproperty();
+		$this->load->view('json',$data);
+    }
+	public function getvideo()
+    {
+        $data['message']=$this->video_model->getvideo();
+		$this->load->view('json',$data);
+    }
+    
+}   
 //EndOfFile
 ?>

@@ -3,7 +3,7 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class Property_model extends CI_Model
 {
-	public function create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)
+	public function create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)
 	{
         
 //        INSERT INTO `property`(`id`, `name`, `email`, `category`, `builder`, `listingowner`, `price`, `leasetype`, `listedby`, `furnishing`, `propertytype`, `timestamp`, `bathroom`, `negotiable`, `securitydeposite`, `bhk`, `address1`, `address2`, `locality`, `city`, `pincode`, `builduparea`, `carpetarea`, `facing`, `powerbackup`, `verified`, `status`, `reportmessage`, `commitescore`, `localityscore`, `societyscore`, `possesion`, `aerialview`, `insights`, `pricetrends`, `yearofestablishment`, `totalprojects`, `associatemembership`, `interior`, `3dfloorplan`, `2dfloorplan`, `iscommercial`)
@@ -40,6 +40,7 @@ class Property_model extends CI_Model
 			'possesion' => $possesion,
 			'aerialview' => $aerialview,
 			'insights' => $insights,
+			'isnew' => $isnew,
 			'pricetrends' => $pricetrends,
 			'yearofestablishment' => $yearofestablishment,
 			'totalprojects' => $totalproject,
@@ -103,7 +104,7 @@ class Property_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity)
+	public function edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)
 	{
 		$data  = array(
 			'name' => $name,
@@ -138,6 +139,7 @@ class Property_model extends CI_Model
 			'possesion' => $possesion,
 			'aerialview' => $aerialview,
 			'insights' => $insights,
+			'isnew' => $isnew,
 			'pricetrends' => $pricetrends,
 			'yearofestablishment' => $yearofestablishment,
 			'totalprojects' => $totalproject,
@@ -248,6 +250,14 @@ class Property_model extends CI_Model
 			);
 		return $negotiable;
 	}
+    public function getisnewdropdown()
+	{
+		$isnew= array(
+			 "0" => "No",
+			 "1" => "Yes"
+			);
+		return $isnew;
+	}
     public function getbathroomdropdown()
 	{
 		$bathroom= array(
@@ -348,5 +358,17 @@ WHERE `property`='$id'")->result();
    
 		return $query;
     }
+     
+	public function getnewproperty()
+	{
+		$query=$this->db->query("SELECT  `property`.`id`  AS `id` ,  `property`.`name`  AS `name` ,  `property`.`email`  AS `email` ,  `category`.`name`  AS `categoryname` ,  `builder`.`name`  AS `buildername` ,  `property`.`price`  AS `price` ,  `property`.`bhk`  AS `bhk` ,  `property`.`address1`  AS `address1` ,  `property`.`address2`  AS `address2` ,  `property`.`city`  AS `city` ,`property`.`isnew`  AS `isnew` ,  `property`.`builduparea`  AS `builduparea` ,  `property`.`carpetarea`  AS `carpetarea` ,  1  
+FROM `property` 
+LEFT OUTER JOIN `category` ON `category`.`id`=`property`.`category` 
+LEFT OUTER JOIN `builder` ON `builder`.`id`=`property`.`builder`   
+WHERE `property`.`isnew`=1     
+ORDER BY  `id` DESC
+LIMIT 0,10")->result();
+		return $query;
+	}
 }
 ?>
