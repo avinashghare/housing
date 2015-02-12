@@ -32,7 +32,7 @@ class User_model extends CI_Model
 	}
 	
 	
-	public function create($name,$email,$password,$accesslevel,$contact,$address)
+	public function create($name,$email,$password,$accesslevel,$contact,$address,$image)
 	{
 		$data  = array(
 			'name' => $name,
@@ -40,6 +40,7 @@ class User_model extends CI_Model
 			'password' =>md5($password),
 			'accesslevel' => $accesslevel,
             'contact'=> $contact,
+            'image'=> $image,
             'address'=> $address
 		);
 		$query=$this->db->insert( 'user', $data );
@@ -84,13 +85,14 @@ class User_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$email,$password,$accesslevel,$contact,$address)
+	public function edit($id,$name,$email,$password,$accesslevel,$contact,$address,$image)
 	{
 		$data  = array(
 			'name' => $name,
 			'email' => $email,
 			'accesslevel' => $accesslevel,
             'contact'=> $contact,
+            'image'=> $image,
             'address'=> $address
 		);
 		if($password != "")
