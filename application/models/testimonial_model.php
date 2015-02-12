@@ -66,7 +66,7 @@ class testimonial_model extends CI_Model
     
 	public function gettestimonial()
 	{
-		$query=$this->db->query("SELECT `testimonial`.`id`, `testimonial`.`user`, `testimonial`.`testimonial`, `testimonial`.`timestamp` ,`user`.`name` AS `username`
+		$query=$this->db->query("SELECT `testimonial`.`id`, `testimonial`.`user`, `testimonial`.`testimonial`, `testimonial`.`timestamp` ,`user`.`name` AS `username`,`user`.`image` AS `image`
 FROM `testimonial` LEFT OUTER JOIN `user` ON `testimonial`.`user`=`user`.`id`
 ORDER BY `testimonial`.`id` DESC LIMIT 0,10")->result();
 		return $query;
