@@ -3,11 +3,10 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class Servicetype_model extends CI_Model
 {
-	public function create($name,$image)
+	public function create($name)
 	{
 		$data  = array(
-			'name' => $name,
-			'image' => $image
+			'name' => $name
 		);
 		$query=$this->db->insert( 'servicetype', $data );
 		$id=$this->db->insert_id();
@@ -30,11 +29,10 @@ class Servicetype_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$image)
+	public function edit($id,$name)
 	{
 		$data  = array(
-			'name' => $name,
-			'image' => $image
+			'name' => $name
 		);
 		$this->db->where( 'id', $id );
 		$query=$this->db->update( 'servicetype', $data );
@@ -63,6 +61,25 @@ class Servicetype_model extends CI_Model
 		
 		return $return;
 	}
+    public function getdaydropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `day`  ORDER BY `id` ASC")->result();
+		$return=array(
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		
+		return $return;
+	}
+     
+	public function getallservicetype()
+	{
+		$query=$this->db->query("SELECT * FROM `servicetype`")->result();
+		return $query;
+	}
+    
 }
 	
 ?>

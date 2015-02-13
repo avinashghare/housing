@@ -2518,12 +2518,6 @@ class Site extends CI_Controller
         $elements[1]->header="Name";
         $elements[1]->alias="name";
         
-        $elements[2]=new stdClass();
-        $elements[2]->field="`servicetype`.`image`";
-        $elements[2]->sort="1";
-        $elements[2]->header="Image";
-        $elements[2]->alias="image";
-        
         
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
@@ -2570,38 +2564,7 @@ class Site extends CI_Controller
 		{
             $name=$this->input->post('name');
             
-            $config['upload_path'] = './uploads/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$this->load->library('upload', $config);
-			$filename="image";
-			$image="";
-			if (  $this->upload->do_upload($filename))
-			{
-				$uploaddata = $this->upload->data();
-				$image=$uploaddata['file_name'];
-                
-                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-                $config_r['maintain_ratio'] = TRUE;
-                $config_t['create_thumb'] = FALSE;///add this
-                $config_r['width']   = 800;
-                $config_r['height'] = 800;
-                $config_r['quality']    = 100;
-                //end of configs
-
-                $this->load->library('image_lib', $config_r); 
-                $this->image_lib->initialize($config_r);
-                if(!$this->image_lib->resize())
-                {
-                    echo "Failed." . $this->image_lib->display_errors();
-                }  
-                else
-                {
-                    $image=$this->image_lib->dest_image;
-                }
-                
-			}
-            
-			if($this->servicetype_model->create($name,$image)==0)
+			if($this->servicetype_model->create($name)==0)
 			$data['alerterror']="New servicetype could not be created.";
 			else
 			$data['alertsuccess']="servicetype created Successfully.";
@@ -2639,44 +2602,7 @@ class Site extends CI_Controller
             $id=$this->input->get_post('id');
             $name=$this->input->get_post('name');
             
-            $config['upload_path'] = './uploads/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$this->load->library('upload', $config);
-			$filename="image";
-			$image="";
-			if (  $this->upload->do_upload($filename))
-			{
-				$uploaddata = $this->upload->data();
-				$image=$uploaddata['file_name'];
-                
-                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-                $config_r['maintain_ratio'] = TRUE;
-                $config_t['create_thumb'] = FALSE;///add this
-                $config_r['width']   = 800;
-                $config_r['height'] = 800;
-                $config_r['quality']    = 100;
-                //end of configs
-
-                $this->load->library('image_lib', $config_r); 
-                $this->image_lib->initialize($config_r);
-                if(!$this->image_lib->resize())
-                {
-                    echo "Failed." . $this->image_lib->display_errors();
-                }  
-                else
-                {
-                    $image=$this->image_lib->dest_image;
-                }
-                
-			}
-            
-            if($image=="")
-            {
-                $image=$this->servicetype_model->getservicetypeimagebyid($id);
-                $image=$image->image;
-            }
-            
-			if($this->servicetype_model->edit($id,$name,$image)==0)
+			if($this->servicetype_model->edit($id,$name)==0)
 			$data['alerterror']="servicetype Editing was unsuccesful";
 			else
 			$data['alertsuccess']="servicetype edited Successfully.";
@@ -2697,7 +2623,335 @@ class Site extends CI_Controller
 		$data['redirect']="site/viewservicetype";
 		$this->load->view("redirect",$data);
 	}
+    //serviceprovider
+    function viewserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewserviceprovider';
+        $data['base_url'] = site_url("site/viewserviceproviderjson");
+        
+		$data['title']='View serviceprovider';
+		$this->load->view('template',$data);
+	} 
+    function viewserviceproviderjson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`serviceprovider`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`serviceprovider`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`area`.`name`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Area";
+        $elements[2]->alias="area";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`serviceprovider`.`rate`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Rate";
+        $elements[3]->alias="rate";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`servicetype`.`name`";
+        $elements[4]->sort="1";
+        $elements[4]->header="servicetypename";
+        $elements[4]->alias="servicetypename";
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`serviceprovider`.`contact`";
+        $elements[5]->sort="1";
+        $elements[5]->header="contact";
+        $elements[5]->alias="contact";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `serviceprovider` LEFT OUTER JOIN `servicetype` ON `servicetype`.`id`=`serviceprovider`.`servicetype` LEFT OUTER JOIN `area` ON `area`.`id`=`serviceprovider`.`area`");
+        
+		$this->load->view("json",$data);
+	} 
     
+    public function createserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+        $data['area']=$this->area_model->getareadropdown();
+        $data['day']=$this->servicetype_model->getdaydropdown();
+		$data[ 'page' ] = 'createserviceprovider';
+		$data[ 'title' ] = 'Create serviceprovider';
+		$this->load->view( 'template', $data );	
+	}
+	function createserviceprovidersubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('contact','contact','trim');
+		$this->form_validation->set_rules('area','area','trim');
+		$this->form_validation->set_rules('rate','rate','trim');
+		$this->form_validation->set_rules('servicetype','servicetype','trim');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+            $data['area']=$this->area_model->getareadropdown();
+            $data['day']=$this->servicetype_model->getdaydropdown();
+            $data[ 'page' ] = 'createserviceprovider';
+            $data[ 'title' ] = 'Create serviceprovider';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            $contact=$this->input->post('contact');
+            $area=$this->input->post('area');
+            $rate=$this->input->post('rate');
+            $servicetype=$this->input->post('servicetype');
+            $day=$this->input->post('day');
+            
+			if($this->serviceprovider_model->create($name,$contact,$area,$rate,$servicetype,$day)==0)
+			$data['alerterror']="New serviceprovider could not be created.";
+			else
+			$data['alertsuccess']="serviceprovider created Successfully.";
+			$data['redirect']="site/viewserviceprovider";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+        $data['day']=$this->servicetype_model->getdaydropdown();
+        $data['area']=$this->area_model->getareadropdown();
+        $data['selectedday']=$this->serviceprovider_model->getdaybyserviceprovider($this->input->get_post('id'));
+		$data['page']='editserviceprovider';
+		$data['title']='Edit serviceprovider';
+		$data['before']=$this->serviceprovider_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editserviceprovidersubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('contact','contact','trim');
+		$this->form_validation->set_rules('area','area','trim');
+		$this->form_validation->set_rules('rate','rate','trim');
+		$this->form_validation->set_rules('servicetype','servicetype','trim');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editserviceprovider';
+            $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+            $data['day']=$this->servicetype_model->getdaydropdown();
+            $data['area']=$this->area_model->getareadropdown();
+            $data['selectedday']=$this->serviceprovider_model->getdaybyserviceprovider($this->input->get_post('id'));
+            $data['before']=$this->serviceprovider_model->beforeedit($this->input->get_post('id'));
+			$data['title']='Edit serviceprovider';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->post('name');
+            $contact=$this->input->post('contact');
+            $area=$this->input->post('area');
+            $rate=$this->input->post('rate');
+            $servicetype=$this->input->post('servicetype');
+            $day=$this->input->post('day');
+            
+			if($this->serviceprovider_model->edit($id,$name,$contact,$area,$rate,$servicetype,$day)==0)
+			$data['alerterror']="serviceprovider Editing was unsuccesful";
+			else
+			$data['alertsuccess']="serviceprovider edited Successfully.";
+			
+			$data['redirect']="site/viewserviceprovider";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deleteserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->serviceprovider_model->deleteserviceprovider($this->input->get('id'));
+		$data['alertsuccess']="serviceprovider Deleted Successfully";
+		$data['redirect']="site/viewserviceprovider";
+		$this->load->view("redirect",$data);
+	}
+    
+    //area
+    function viewarea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewarea';
+        $data['base_url'] = site_url("site/viewareajson");
+        
+		$data['title']='View area';
+		$this->load->view('template',$data);
+	} 
+    function viewareajson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`area`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`area`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `area`");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createarea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createarea';
+		$data[ 'title' ] = 'Create area';
+		$this->load->view( 'template', $data );	
+	}
+	function createareasubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createarea';
+            $data[ 'title' ] = 'Create area';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            
+			if($this->area_model->create($name)==0)
+			$data['alerterror']="New area could not be created.";
+			else
+			$data['alertsuccess']="area created Successfully.";
+			$data['redirect']="site/viewarea";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editarea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editarea';
+		$data['title']='Edit area';
+		$data['before']=$this->area_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editareasubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('name','Name','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editarea';
+            $data['before']=$this->area_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit area';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->get_post('name');
+            
+			if($this->area_model->edit($id,$name)==0)
+			$data['alerterror']="area Editing was unsuccesful";
+			else
+			$data['alertsuccess']="area edited Successfully.";
+			
+			$data['redirect']="site/viewarea";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deletearea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->area_model->deletearea($this->input->get('id'));
+		$data['alertsuccess']="area Deleted Successfully";
+		$data['redirect']="site/viewarea";
+		$this->load->view("redirect",$data);
+	}
     
     
 }

@@ -175,6 +175,9 @@ class Json extends CI_Controller
     public function addenquiry()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+        echo "before";
+        print_r($data);
+        echo "after";
         $userid=$data['userid'];
         $propertyid=$data['propertyid'];
         $message=$data['message'];
@@ -208,6 +211,36 @@ class Json extends CI_Controller
 		$this->load->view('json',$data);
     }
     
+    
+    
+	public function getallservicetype()
+    {
+        $data['message']=$this->servicetype_model->getallservicetype();
+		$this->load->view('json',$data);
+    }
+	public function getallarea()
+    {
+        $data['message']=$this->area_model->getallarea();
+		$this->load->view('json',$data);
+    }
+	public function getallweekday()
+    {
+        $data['message']=$this->area_model->getallweekday();
+		$this->load->view('json',$data);
+    }
+    
+    public function addserviceenquiry()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $serviceproviderid=$data['serviceproviderid'];
+        $name=$data['name'];
+        $subject=$data['subject'];
+        $query=$data['query'];
+        $data['message']=$this->serviceprovider_model->addserviceenquiry($serviceproviderid,$name,$subject,$query);
+        $this->load->view('json',$data);
+    
+    }
 }   
 //EndOfFile
 ?>
