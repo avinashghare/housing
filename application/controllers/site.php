@@ -1208,9 +1208,169 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
+        
+        
+        $json=array();
+        
+        $json[0]=new stdClass();
+        $json[0]->placeholder="";
+        $json[0]->value="";
+        $json[0]->label="State";
+        $json[0]->type="text";
+        $json[0]->options="";
+        $json[0]->classes="";
+        
+        $json[1]=new stdClass();
+        $json[1]->placeholder="";
+        $json[1]->value="";
+        $json[1]->label="Floors";
+        $json[1]->type="text";
+        $json[1]->options="";
+        $json[1]->classes="";
+        
+        $json[2]=new stdClass();
+        $json[2]->placeholder="";
+        $json[2]->value="";
+        $json[2]->label="Rent per Month";
+        $json[2]->type="text";
+        $json[2]->options="";
+        $json[2]->classes="";
+        
+        $json[3]=new stdClass();
+        $json[3]->placeholder="";
+        $json[3]->value="";
+        $json[3]->label="Price Per Sq. Ft.";
+        $json[3]->type="text";
+        $json[3]->options="";
+        $json[3]->classes="";
+        
+        $json[4]=new stdClass();
+        $json[4]->placeholder="";
+        $json[4]->value="";
+        $json[4]->label="Rent Per Sq. Ft.";
+        $json[4]->type="text";
+        $json[4]->options="";
+        $json[4]->classes="";
+        
+        $json[5]=new stdClass();
+        $json[5]->placeholder="";
+        $json[5]->value="";
+        $json[5]->label="Lifts";
+        $json[5]->type="text";
+        $json[5]->options="";
+        $json[5]->classes="";
+        
+        $json[6]=new stdClass();
+        $json[6]->placeholder="";
+        $json[6]->value="";
+        $json[6]->label="Airports";
+        $json[6]->type="text";
+        $json[6]->options="";
+        $json[6]->classes="";
+        
+        $json[7]=new stdClass();
+        $json[7]->placeholder="";
+        $json[7]->value="";
+        $json[7]->label="Train Stations";
+        $json[7]->type="text";
+        $json[7]->options="";
+        $json[7]->classes="";
+        
+        $json[8]=new stdClass();
+        $json[8]->placeholder="";
+        $json[8]->value="";
+        $json[8]->label="Bus Stations";
+        $json[8]->type="text";
+        $json[8]->options="";
+        $json[8]->classes="";
+        
+        $json[9]=new stdClass();
+        $json[9]->placeholder="";
+        $json[9]->value="";
+        $json[9]->label="Restaurants";
+        $json[9]->type="text";
+        $json[9]->options="";
+        $json[9]->classes="";
+        
+        $json[10]=new stdClass();
+        $json[10]->placeholder="";
+        $json[10]->value="";
+        $json[10]->label="Movie Theaters";
+        $json[10]->type="text";
+        $json[10]->options="";
+        $json[10]->classes="";
+        
+        $json[11]=new stdClass();
+        $json[11]->placeholder="";
+        $json[11]->value="";
+        $json[11]->label="Bars Or Night Clubs";
+        $json[11]->type="text";
+        $json[11]->options="";
+        $json[11]->classes="";
+        
+        $json[12]=new stdClass();
+        $json[12]->placeholder="";
+        $json[12]->value="";
+        $json[12]->label="Departmental Stores Or Grocery";
+        $json[12]->type="text";
+        $json[12]->options="";
+        $json[12]->classes="";
+        
+        $json[13]=new stdClass();
+        $json[13]->placeholder="";
+        $json[13]->value="";
+        $json[13]->label="Pharmacies";
+        $json[13]->type="text";
+        $json[13]->options="";
+        $json[13]->classes="";
+        
+        $json[14]=new stdClass();
+        $json[14]->placeholder="";
+        $json[14]->value="";
+        $json[14]->label="Shopping Mall";
+        $json[14]->type="text";
+        $json[14]->options="";
+        $json[14]->classes="";
+        
+        $json[15]=new stdClass();
+        $json[15]->placeholder="";
+        $json[15]->value="";
+        $json[15]->label="Bank Or ATMs";
+        $json[15]->type="text";
+        $json[15]->options="";
+        $json[15]->classes="";
+        
+        $json[16]=new stdClass();
+        $json[16]->placeholder="";
+        $json[16]->value="";
+        $json[16]->label="Hospitals";
+        $json[16]->type="text";
+        $json[16]->options="";
+        $json[16]->classes="";
+        
+        $json[17]=new stdClass();
+        $json[17]->placeholder="";
+        $json[17]->value="";
+        $json[17]->label="Schools";
+        $json[17]->type="text";
+        $json[17]->options="";
+        $json[17]->classes="";
+        
+        $json[18]=new stdClass();
+        $json[18]->placeholder="";
+        $json[18]->value="";
+        $json[18]->label="Parks";
+        $json[18]->type="text";
+        $json[18]->options="";
+        $json[18]->classes="";
+        
+        $data["fieldjson"]=$json;
+        
         $data['societyfacility']=$this->societyfacility_model->getsocietyfacilitydropdown();
         $data['amenity']=$this->amenity_model->getamenitydropdown();
+        $data['age']=$this->amenity_model->getagedropdown();
         $data['category']=$this->property_model->getcategorydropdown();
+        $data['luxury']=$this->property_model->getluxurydropdown();
         $data['builder']=$this->builder_model->getbuilderdropdown();
         $data['listingowner']=$this->user_model->getlistingownerdropdown();
         $data['listedby']=$this->property_model->getlistedbydropdown();
@@ -1275,11 +1435,13 @@ class Site extends CI_Controller
 			$data['alerterror'] = validation_errors();
             $data['societyfacility']=$this->societyfacility_model->getsocietyfacilitydropdown();
             $data['amenity']=$this->amenity_model->getamenitydropdown();
+            $data['age']=$this->amenity_model->getagedropdown();
             $data['category']=$this->property_model->getcategorydropdown();
             $data['builder']=$this->builder_model->getbuilderdropdown();
             $data['listingowner']=$this->user_model->getlistingownerdropdown();
             $data['listedby']=$this->property_model->getlistedbydropdown();
             $data['furnishing']=$this->property_model->getfurnishingdropdown();
+            $data['luxury']=$this->property_model->getluxurydropdown();
             $data['leasetype']=$this->leasetype_model->getleasetypedropdown();
             $data['propertytype']=$this->propertytype_model->getpropertytypedropdown();
             $data['status']=$this->property_model->getstatusdropdown();
@@ -1339,6 +1501,23 @@ class Site extends CI_Controller
             $amenity=$this->input->post('amenity');
             $isnew=$this->input->post('isnew');
             
+//            $age,$luxury,$residential,$kitchen,$developmentnego,$preferencialnego,$parkingnego,$maintainancenego,$clubhousenego,$floorrisenego,$othernego,$rentnego,$depositenego,$json
+            
+            $age=$this->input->post('age');
+            $luxury=$this->input->post('luxury');
+            $residential=$this->input->post('residential');
+            $kitchen=$this->input->post('kitchen');
+            $developmentnego=$this->input->post('developmentnego');
+            $preferencialnego=$this->input->post('preferencialnego');
+            $parkingnego=$this->input->post('parkingnego');
+            $maintainancenego=$this->input->post('maintainancenego');
+            $clubhousenego=$this->input->post('clubhousenego');
+            $floorrisenego=$this->input->post('floorrisenego');
+            $othernego=$this->input->post('othernego');
+            $rentnego=$this->input->post('rentnego');
+            $depositenego=$this->input->post('depositenego');
+            $json=$this->input->post('json');
+            
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1370,7 +1549,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->property_model->create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)==0)
+			if($this->property_model->create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew,$age,$luxury,$residential,$kitchen,$developmentnego,$preferencialnego,$parkingnego,$maintainancenego,$clubhousenego,$floorrisenego,$othernego,$rentnego,$depositenego,$json)==0)
 			$data['alerterror']="New property could not be created.";
 			else
 			$data['alertsuccess']="property created Successfully.";
@@ -1385,7 +1564,9 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
         $data['societyfacility']=$this->societyfacility_model->getsocietyfacilitydropdown();
         $data['amenity']=$this->amenity_model->getamenitydropdown();
+        $data['age']=$this->amenity_model->getagedropdown();
         $data['category']=$this->property_model->getcategorydropdown();
+        $data['luxury']=$this->property_model->getluxurydropdown();
         $data['builder']=$this->builder_model->getbuilderdropdown();
         $data['listingowner']=$this->user_model->getlistingownerdropdown();
         $data['listedby']=$this->property_model->getlistedbydropdown();
@@ -1454,6 +1635,8 @@ class Site extends CI_Controller
 		{
 			$data['alerterror'] = validation_errors();
 			$data['page']='editproperty';
+            $data['luxury']=$this->property_model->getluxurydropdown();
+            $data['age']=$this->amenity_model->getagedropdown();
             $data['category']=$this->property_model->getcategorydropdown();
             $data['builder']=$this->builder_model->getbuilderdropdown();
             $data['listingowner']=$this->user_model->getlistingownerdropdown();
@@ -1522,6 +1705,22 @@ class Site extends CI_Controller
             $isnew=$this->input->post('isnew');
             $amenity=$this->input->post('amenity');
             
+            
+            $age=$this->input->post('age');
+            $luxury=$this->input->post('luxury');
+            $residential=$this->input->post('residential');
+            $kitchen=$this->input->post('kitchen');
+            $developmentnego=$this->input->post('developmentnego');
+            $preferencialnego=$this->input->post('preferencialnego');
+            $parkingnego=$this->input->post('parkingnego');
+            $maintainancenego=$this->input->post('maintainancenego');
+            $clubhousenego=$this->input->post('clubhousenego');
+            $floorrisenego=$this->input->post('floorrisenego');
+            $othernego=$this->input->post('othernego');
+            $rentnego=$this->input->post('rentnego');
+            $depositenego=$this->input->post('depositenego');
+            $json=$this->input->post('json');
+            
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$this->load->library('upload', $config);
@@ -1559,7 +1758,7 @@ class Site extends CI_Controller
                 $image=$image->floorplan2d;
             }
             
-			if($this->property_model->edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)==0)
+			if($this->property_model->edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew,$age,$luxury,$residential,$kitchen,$developmentnego,$preferencialnego,$parkingnego,$maintainancenego,$clubhousenego,$floorrisenego,$othernego,$rentnego,$depositenego,$json)==0)
 			$data['alerterror']="property Editing was unsuccesful";
 			else
 			$data['alertsuccess']="property edited Successfully.";
@@ -2518,12 +2717,6 @@ class Site extends CI_Controller
         $elements[1]->header="Name";
         $elements[1]->alias="name";
         
-        $elements[2]=new stdClass();
-        $elements[2]->field="`servicetype`.`image`";
-        $elements[2]->sort="1";
-        $elements[2]->header="Image";
-        $elements[2]->alias="image";
-        
         
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
@@ -2570,38 +2763,7 @@ class Site extends CI_Controller
 		{
             $name=$this->input->post('name');
             
-            $config['upload_path'] = './uploads/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$this->load->library('upload', $config);
-			$filename="image";
-			$image="";
-			if (  $this->upload->do_upload($filename))
-			{
-				$uploaddata = $this->upload->data();
-				$image=$uploaddata['file_name'];
-                
-                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-                $config_r['maintain_ratio'] = TRUE;
-                $config_t['create_thumb'] = FALSE;///add this
-                $config_r['width']   = 800;
-                $config_r['height'] = 800;
-                $config_r['quality']    = 100;
-                //end of configs
-
-                $this->load->library('image_lib', $config_r); 
-                $this->image_lib->initialize($config_r);
-                if(!$this->image_lib->resize())
-                {
-                    echo "Failed." . $this->image_lib->display_errors();
-                }  
-                else
-                {
-                    $image=$this->image_lib->dest_image;
-                }
-                
-			}
-            
-			if($this->servicetype_model->create($name,$image)==0)
+			if($this->servicetype_model->create($name)==0)
 			$data['alerterror']="New servicetype could not be created.";
 			else
 			$data['alertsuccess']="servicetype created Successfully.";
@@ -2639,44 +2801,7 @@ class Site extends CI_Controller
             $id=$this->input->get_post('id');
             $name=$this->input->get_post('name');
             
-            $config['upload_path'] = './uploads/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$this->load->library('upload', $config);
-			$filename="image";
-			$image="";
-			if (  $this->upload->do_upload($filename))
-			{
-				$uploaddata = $this->upload->data();
-				$image=$uploaddata['file_name'];
-                
-                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-                $config_r['maintain_ratio'] = TRUE;
-                $config_t['create_thumb'] = FALSE;///add this
-                $config_r['width']   = 800;
-                $config_r['height'] = 800;
-                $config_r['quality']    = 100;
-                //end of configs
-
-                $this->load->library('image_lib', $config_r); 
-                $this->image_lib->initialize($config_r);
-                if(!$this->image_lib->resize())
-                {
-                    echo "Failed." . $this->image_lib->display_errors();
-                }  
-                else
-                {
-                    $image=$this->image_lib->dest_image;
-                }
-                
-			}
-            
-            if($image=="")
-            {
-                $image=$this->servicetype_model->getservicetypeimagebyid($id);
-                $image=$image->image;
-            }
-            
-			if($this->servicetype_model->edit($id,$name,$image)==0)
+			if($this->servicetype_model->edit($id,$name)==0)
 			$data['alerterror']="servicetype Editing was unsuccesful";
 			else
 			$data['alertsuccess']="servicetype edited Successfully.";
@@ -2697,7 +2822,335 @@ class Site extends CI_Controller
 		$data['redirect']="site/viewservicetype";
 		$this->load->view("redirect",$data);
 	}
+    //serviceprovider
+    function viewserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewserviceprovider';
+        $data['base_url'] = site_url("site/viewserviceproviderjson");
+        
+		$data['title']='View serviceprovider';
+		$this->load->view('template',$data);
+	} 
+    function viewserviceproviderjson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`serviceprovider`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`serviceprovider`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`area`.`name`";
+        $elements[2]->sort="1";
+        $elements[2]->header="Area";
+        $elements[2]->alias="area";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`serviceprovider`.`rate`";
+        $elements[3]->sort="1";
+        $elements[3]->header="Rate";
+        $elements[3]->alias="rate";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`servicetype`.`name`";
+        $elements[4]->sort="1";
+        $elements[4]->header="servicetypename";
+        $elements[4]->alias="servicetypename";
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`serviceprovider`.`contact`";
+        $elements[5]->sort="1";
+        $elements[5]->header="contact";
+        $elements[5]->alias="contact";
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `serviceprovider` LEFT OUTER JOIN `servicetype` ON `servicetype`.`id`=`serviceprovider`.`servicetype` LEFT OUTER JOIN `area` ON `area`.`id`=`serviceprovider`.`area`");
+        
+		$this->load->view("json",$data);
+	} 
     
+    public function createserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+        $data['area']=$this->area_model->getareadropdown();
+        $data['day']=$this->servicetype_model->getdaydropdown();
+		$data[ 'page' ] = 'createserviceprovider';
+		$data[ 'title' ] = 'Create serviceprovider';
+		$this->load->view( 'template', $data );	
+	}
+	function createserviceprovidersubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('contact','contact','trim');
+		$this->form_validation->set_rules('area','area','trim');
+		$this->form_validation->set_rules('rate','rate','trim');
+		$this->form_validation->set_rules('servicetype','servicetype','trim');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+            $data['area']=$this->area_model->getareadropdown();
+            $data['day']=$this->servicetype_model->getdaydropdown();
+            $data[ 'page' ] = 'createserviceprovider';
+            $data[ 'title' ] = 'Create serviceprovider';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            $contact=$this->input->post('contact');
+            $area=$this->input->post('area');
+            $rate=$this->input->post('rate');
+            $servicetype=$this->input->post('servicetype');
+            $day=$this->input->post('day');
+            
+			if($this->serviceprovider_model->create($name,$contact,$area,$rate,$servicetype,$day)==0)
+			$data['alerterror']="New serviceprovider could not be created.";
+			else
+			$data['alertsuccess']="serviceprovider created Successfully.";
+			$data['redirect']="site/viewserviceprovider";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+        $data['day']=$this->servicetype_model->getdaydropdown();
+        $data['area']=$this->area_model->getareadropdown();
+        $data['selectedday']=$this->serviceprovider_model->getdaybyserviceprovider($this->input->get_post('id'));
+		$data['page']='editserviceprovider';
+		$data['title']='Edit serviceprovider';
+		$data['before']=$this->serviceprovider_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editserviceprovidersubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('contact','contact','trim');
+		$this->form_validation->set_rules('area','area','trim');
+		$this->form_validation->set_rules('rate','rate','trim');
+		$this->form_validation->set_rules('servicetype','servicetype','trim');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editserviceprovider';
+            $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+            $data['day']=$this->servicetype_model->getdaydropdown();
+            $data['area']=$this->area_model->getareadropdown();
+            $data['selectedday']=$this->serviceprovider_model->getdaybyserviceprovider($this->input->get_post('id'));
+            $data['before']=$this->serviceprovider_model->beforeedit($this->input->get_post('id'));
+			$data['title']='Edit serviceprovider';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->post('name');
+            $contact=$this->input->post('contact');
+            $area=$this->input->post('area');
+            $rate=$this->input->post('rate');
+            $servicetype=$this->input->post('servicetype');
+            $day=$this->input->post('day');
+            
+			if($this->serviceprovider_model->edit($id,$name,$contact,$area,$rate,$servicetype,$day)==0)
+			$data['alerterror']="serviceprovider Editing was unsuccesful";
+			else
+			$data['alertsuccess']="serviceprovider edited Successfully.";
+			
+			$data['redirect']="site/viewserviceprovider";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deleteserviceprovider()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->serviceprovider_model->deleteserviceprovider($this->input->get('id'));
+		$data['alertsuccess']="serviceprovider Deleted Successfully";
+		$data['redirect']="site/viewserviceprovider";
+		$this->load->view("redirect",$data);
+	}
+    
+    //area
+    function viewarea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewarea';
+        $data['base_url'] = site_url("site/viewareajson");
+        
+		$data['title']='View area';
+		$this->load->view('template',$data);
+	} 
+    function viewareajson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`area`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`area`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `area`");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createarea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createarea';
+		$data[ 'title' ] = 'Create area';
+		$this->load->view( 'template', $data );	
+	}
+	function createareasubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createarea';
+            $data[ 'title' ] = 'Create area';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            
+			if($this->area_model->create($name)==0)
+			$data['alerterror']="New area could not be created.";
+			else
+			$data['alertsuccess']="area created Successfully.";
+			$data['redirect']="site/viewarea";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editarea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editarea';
+		$data['title']='Edit area';
+		$data['before']=$this->area_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editareasubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		
+		$this->form_validation->set_rules('name','Name','trim|required');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editarea';
+            $data['before']=$this->area_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit area';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->get_post('name');
+            
+			if($this->area_model->edit($id,$name)==0)
+			$data['alerterror']="area Editing was unsuccesful";
+			else
+			$data['alertsuccess']="area edited Successfully.";
+			
+			$data['redirect']="site/viewarea";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deletearea()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->area_model->deletearea($this->input->get('id'));
+		$data['alertsuccess']="area Deleted Successfully";
+		$data['redirect']="site/viewarea";
+		$this->load->view("redirect",$data);
+	}
     
     
 }

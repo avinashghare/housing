@@ -63,6 +63,18 @@ class Amenity_model extends CI_Model
 		
 		return $return;
 	}
+    public function getagedropdown()
+	{
+		$query=$this->db->query("SELECT * FROM `ageofproperty`  ORDER BY `id` ASC")->result();
+		$return=array(
+		);
+		foreach($query as $row)
+		{
+			$return[$row->id]=$row->name;
+		}
+		
+		return $return;
+	}
 }
 	
 ?>

@@ -1,14 +1,14 @@
 <?php
 if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
-class Servicetype_model extends CI_Model
+class Area_model extends CI_Model
 {
 	public function create($name)
 	{
 		$data  = array(
 			'name' => $name
 		);
-		$query=$this->db->insert( 'servicetype', $data );
+		$query=$this->db->insert( 'area', $data );
 		$id=$this->db->insert_id();
 		
 		if(!$query)
@@ -16,16 +16,16 @@ class Servicetype_model extends CI_Model
 		else
 			return  1;
 	}
-	function viewservicetype()
+	function viewarea()
 	{
-		$query="SELECT `id`, `name` FROM `servicetype`";
+		$query="SELECT `id`, `name` FROM `area`";
 		$query=$this->db->query($query)->result();
 		return $query;
 	}
 	public function beforeedit( $id )
 	{
 		$this->db->where( 'id', $id );
-		$query=$this->db->get( 'servicetype' )->row();
+		$query=$this->db->get( 'area' )->row();
 		return $query;
 	}
 	
@@ -35,23 +35,23 @@ class Servicetype_model extends CI_Model
 			'name' => $name
 		);
 		$this->db->where( 'id', $id );
-		$query=$this->db->update( 'servicetype', $data );
+		$query=$this->db->update( 'area', $data );
 		return 1;
 	}
-	function deleteservicetype($id)
+	function deletearea($id)
 	{
-		$query=$this->db->query("DELETE FROM `servicetype` WHERE `id`='$id'");
+		$query=$this->db->query("DELETE FROM `area` WHERE `id`='$id'");
 	}
     
-	public function getservicetypeimagebyid($id)
+	public function getareaimagebyid($id)
 	{
-		$query=$this->db->query("SELECT `image` FROM `servicetype` WHERE `id`='$id'")->row();
+		$query=$this->db->query("SELECT `image` FROM `area` WHERE `id`='$id'")->row();
 		return $query;
 	}
     
-    public function getservicetypedropdown()
+    public function getareadropdown()
 	{
-		$query=$this->db->query("SELECT * FROM `servicetype`  ORDER BY `id` ASC")->result();
+		$query=$this->db->query("SELECT * FROM `area`  ORDER BY `id` ASC")->result();
 		$return=array(
 		);
 		foreach($query as $row)
@@ -73,13 +73,17 @@ class Servicetype_model extends CI_Model
 		
 		return $return;
 	}
-     
-	public function getallservicetype()
+    
+	public function getallarea()
 	{
-		$query=$this->db->query("SELECT * FROM `servicetype`")->result();
+		$query=$this->db->query("SELECT * FROM `area`")->result();
 		return $query;
 	}
-    
+	public function getallweekday()
+	{
+		$query=$this->db->query("SELECT * FROM `day`")->result();
+		return $query;
+	}
 }
 	
 ?>

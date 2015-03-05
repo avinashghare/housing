@@ -165,3 +165,48 @@ function generatepiechart(texttitle, target, value) {
         }]
     });
 }
+
+
+
+
+function filljsoninput(fromdiv,todiv) {
+       
+        var $from=$(fromdiv);
+        var fromjson=JSON.parse($from.val());
+        var $to=$(todiv);
+        for(var i=0;i<fromjson.length;i++)
+        {
+            var fromj=fromjson[i];
+            switch(fromj.type)
+            {
+                    case "text":
+                    $to.append("<div class='form-group genfromjson'><label class='col-sm-2 control-label' for='normal-field'>"+fromj.label+"</label><div class='col-sm-4'><input type='text' json-type='"+fromj.type+"' json-class='"+fromj.classes+"' id='normal-field' placeholder='"+fromj.placeholder+"' class='form-control jsonelement "+fromj.classes+"' value='"+fromj.value+"'></div></div>");
+                    break;
+                    case "textarea":
+                    $to.append("<div class='form-group genfromjson'><label class='col-sm-2 control-label' for='normal-field'>"+fromj.label+"</label><div class='col-sm-4'><textarea id='normal-field' json-type='"+fromj.type+"' json-class='"+fromj.classes+"' placeholder='"+fromj.placeholder+"' class='form-control jsonelement "+fromj.classes+"' >"+fromj.value+"</textarea></div></div>");
+                    break;
+                    
+            }
+            
+        }
+    }
+    
+    function jsonsubmit(todiv,fromdiv) {
+        var $from=$(fromdiv).children(".genfromjson");
+        var tojson=[];
+        for(var i=0;i<$from.length;i++)
+        {
+            var $fromsin=$from.eq(i);
+            var tosin={};
+            //console.log($fromsin.html());
+            tosin.label=$fromsin.children("label").text();
+            console.log($fromsin.children("div").children(".jsonelement").attr("json-type"));
+            tosin.type=$fromsin.children("div").children(".jsonelement").attr("json-type");
+            tosin.classes=$fromsin.children("div").children(".jsonelement").attr("json-class");
+            tosin.placeholder=$fromsin.children("div").children(".jsonelement").attr("placeholder");
+            tosin.value=$fromsin.children("div").children(".jsonelement").val();
+            tojson.push(tosin);
+        }
+        //console.log(tojson);
+        $(todiv).val(JSON.stringify(tojson));
+    }

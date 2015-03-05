@@ -3,9 +3,8 @@ if ( !defined( 'BASEPATH' ) )
 	exit( 'No direct script access allowed' );
 class Property_model extends CI_Model
 {
-	public function create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)
+	public function create($name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew,$age,$luxury,$residential,$kitchen,$developmentnego,$preferencialnego,$parkingnego,$maintainancenego,$clubhousenego,$floorrisenego,$othernego,$rentnego,$depositenego,$json)
 	{
-        
 //        INSERT INTO `property`(`id`, `name`, `email`, `category`, `builder`, `listingowner`, `price`, `leasetype`, `listedby`, `furnishing`, `propertytype`, `timestamp`, `bathroom`, `negotiable`, `securitydeposite`, `bhk`, `address1`, `address2`, `locality`, `city`, `pincode`, `builduparea`, `carpetarea`, `facing`, `powerbackup`, `verified`, `status`, `reportmessage`, `commitescore`, `localityscore`, `societyscore`, `possesion`, `aerialview`, `insights`, `pricetrends`, `yearofestablishment`, `totalprojects`, `associatemembership`, `interior`, `3dfloorplan`, `2dfloorplan`, `iscommercial`)
 		$data  = array(
 			'name' => $name,
@@ -48,6 +47,20 @@ class Property_model extends CI_Model
 			'interior' => $interior,
 			'floorplan3d' => $threedfloorplan,
 			'floorplan2d' => $image,
+            'age' => $age,
+            'luxury' => $luxury,
+            'residential' => $residential,
+            'kitchen' => $kitchen,
+            'developmentnego' => $developmentnego,
+            'preferencialnego' => $preferencialnego,
+            'parkingnego' => $parkingnego,
+            'maintainancenego' => $maintainancenego,
+            'clubhousenego' => $clubhousenego,
+            'floorrisenego' => $floorrisenego,
+            'othernego' => $othernego,
+            'rentnego' => $rentnego,
+            'depositenego' => $depositenego,
+            'json' => $json,
 			'iscommercial' => $iscommercial
 		);
 		$query=$this->db->insert( 'property', $data );
@@ -104,7 +117,7 @@ class Property_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew)
+	public function edit($id,$name,$email,$category,$builder,$listingowner,$price,$leasetype,$listedby,$furnishing,$propertytype,$bathroom,$negotiable,$bhk,$address1,$address2,$locality,$city,$pincode,$builduparea,$carpetarea,$facing,$powerbackup,$verified,$status,$reportmessage,$commitescore,$localityscore,$societyscore,$possesion,$aerialview,$insights,$pricetrends,$yearofestablishment,$totalproject,$associatemembership,$interior,$threedfloorplan,$iscommercial,$image,$securitydeposite,$societyfacility,$amenity,$isnew,$age,$luxury,$residential,$kitchen,$developmentnego,$preferencialnego,$parkingnego,$maintainancenego,$clubhousenego,$floorrisenego,$othernego,$rentnego,$depositenego,$json)
 	{
 		$data  = array(
 			'name' => $name,
@@ -147,6 +160,20 @@ class Property_model extends CI_Model
 			'interior' => $interior,
 			'floorplan3d' => $threedfloorplan,
 			'floorplan2d' => $image,
+            'age' => $age,
+            'luxury' => $luxury,
+            'residential' => $residential,
+            'kitchen' => $kitchen,
+            'developmentnego' => $developmentnego,
+            'preferencialnego' => $preferencialnego,
+            'parkingnego' => $parkingnego,
+            'maintainancenego' => $maintainancenego,
+            'clubhousenego' => $clubhousenego,
+            'floorrisenego' => $floorrisenego,
+            'othernego' => $othernego,
+            'rentnego' => $rentnego,
+            'depositenego' => $depositenego,
+            'json' => $json,
 			'iscommercial' => $iscommercial
 		);
 		$this->db->where( 'id', $id );
@@ -298,6 +325,16 @@ class Property_model extends CI_Model
 		return $verified;
 	}
     
+    
+    public function getluxurydropdown()
+	{
+		$luxury= array(
+			 "Yes" => "Yes",
+			 "No" => "No"
+			);
+		return $luxury;
+	}
+    
      public function getsocietyfacilitybyproperty($id)
 	{
          $return=array();
@@ -369,6 +406,32 @@ WHERE `property`.`isnew`=1
 ORDER BY  `id` DESC
 LIMIT 0,10")->result();
 		return $query;
+	}
+    
+	public function addusershortlist($userid,$propertyid)
+	{
+        $query="SELECT * FROM `usershortlist` WHERE `user`='$userid' AND `property`='$propertyid'";
+        $row=$this->db->query($query);
+        if($row->num_rows() > 0)
+        {
+            return 1;
+        }
+        else
+        {
+            $data  = array(
+                'user' => $userid,
+                'property' => $propertyid
+            );
+            $queryadd=$this->db->insert( 'usershortlist', $data );
+            if($queryadd)
+            {
+                return  1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 	}
 }
 ?>

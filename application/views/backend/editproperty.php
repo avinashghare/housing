@@ -334,12 +334,161 @@
 				</div>
 				
 				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Age Of Property</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('age',$age,set_value('age',$before->age),'id="ageid" class="chzn-select form-control" 	data-placeholder="Choose a age..."');
+					?>
+				  </div>
+				</div>
+				
+				
+<!--
+				<div class="form-group">
+				  <label class="col-sm-2 control-label" for="normal-field">age</label>
+				  <div class="col-sm-4">
+					<input type="text" id="normal-field" class="form-control" name="age" value="<?php echo set_value('age',$before->age);?>">
+				  </div>
+				</div>
+-->
+				
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select luxury</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('luxury',$luxury,set_value('luxury',$before->luxury),'id="luxuryid" class="chzn-select form-control" 	data-placeholder="Choose a luxury..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Residential</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('residential',$luxury,set_value('residential',$before->residential),'id="residentialid" class="chzn-select form-control" 	data-placeholder="Choose a residential..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select kitchen-Moduler</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('kitchen',$luxury,set_value('kitchen',$before->kitchen),'id="kitchenid" class="chzn-select form-control" 	data-placeholder="Choose a kitchen..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Development Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('developmentnego',$luxury,set_value('developmentnego',$before->developmentnego),'id="developmentnegoid" class="chzn-select form-control" 	data-placeholder="Choose a developmentnego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Preferencial Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('preferencialnego',$luxury,set_value('preferencialnego',$before->preferencialnego),'id="preferencialnegoid" class="chzn-select form-control" 	data-placeholder="Choose a preferencialnego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Parking Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('parkingnego',$luxury,set_value('parkingnego',$before->parkingnego),'id="parkingnegoid" class="chzn-select form-control" 	data-placeholder="Choose a parkingnego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Maintainance Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('maintainancenego',$luxury,set_value('maintainancenego',$before->maintainancenego),'id="maintainancenegoid" class="chzn-select form-control" 	data-placeholder="Choose a maintainancenego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Clubhouse Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('clubhousenego',$luxury,set_value('clubhousenego',$before->clubhousenego),'id="clubhousenegoid" class="chzn-select form-control" 	data-placeholder="Choose a clubhousenego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Floorrise Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('floorrisenego',$luxury,set_value('floorrisenego',$before->floorrisenego),'id="floorrisenegoid" class="chzn-select form-control" 	data-placeholder="Choose a floorrisenego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Other Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('othernego',$luxury,set_value('othernego',$before->othernego),'id="othernegoid" class="chzn-select form-control" 	data-placeholder="Choose a othernego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Rent Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('rentnego',$luxury,set_value('rentnego',$before->rentnego),'id="rentnegoid" class="chzn-select form-control" 	data-placeholder="Choose a rentnego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">Select Deposite Negotiation</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('depositenego',$luxury,set_value('depositenego',$before->depositenego),'id="depositenegoid" class="chzn-select form-control" 	data-placeholder="Choose a depositenego..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group hidden">
+				  <label class="col-sm-2 control-label" for="normal-field">json</label>
+				  <div class="col-sm-4">
+					<textarea name="json" id="" cols="20" rows="10" class="form-control tinymce fieldjsoninput"><?php echo set_value( 'json',$before->json);?></textarea>
+				  </div>
+				</div>
+				<div class="fieldjson"></div>
+				
+				<div class=" form-group">
 				  <label class="col-sm-2 control-label">&nbsp;</label>
 				  <div class="col-sm-4">
-				  <button type="submit" class="btn btn-primary">Save</button>
+				  <button type="submit" class="btn btn-primary jsonsubmit">Save</button>
 				  <a href="<?php echo site_url('site/viewproperty'); ?>" class="btn btn-secondary">Cancel</a>
 				</div>
 				</div>
 			  </form>
 			</div>
 		</section>
+<script type="text/javascript">
+    function operatorcategories() {
+        console.log($('#accesslevelid').val());
+        if($('#accesslevelid').val()==2)
+        {
+            $( ".categoryclass" ).show();
+        }
+       
+        else
+        {
+            $( ".categoryclass" ).hide();
+        }
+       
+    }
+    
+     
+    $(document).ready(function () {
+//        console.log($(".fieldjsoninput").val());
+        filljsoninput(".fieldjsoninput",".fieldjson");
+        $(".jsonsubmit").click(function() {
+            jsonsubmit(".fieldjsoninput",".fieldjson");
+            //return false;
+        });
+        
+    });
+</script>
