@@ -2897,6 +2897,126 @@ class Site extends CI_Controller
         
 		$this->load->view("json",$data);
 	} 
+
+    
+//    public function createserviceprovider()
+//	{
+//		$access = array("1");
+//		$this->checkaccess($access);
+//        $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+//        $data['area']=$this->area_model->getareadropdown();
+//        $data['day']=$this->servicetype_model->getdaydropdown();
+//		$data[ 'page' ] = 'createserviceprovider';
+//		$data[ 'title' ] = 'Create serviceprovider';
+//		$this->load->view( 'template', $data );	
+//	}
+//	function createserviceprovidersubmit()
+//	{
+//		$access = array("1");
+//		$this->checkaccess($access);
+//		$this->form_validation->set_rules('name','Name','trim|required');
+//		$this->form_validation->set_rules('contact','contact','trim');
+//		$this->form_validation->set_rules('area','area','trim');
+//		$this->form_validation->set_rules('rate','rate','trim');
+//		$this->form_validation->set_rules('servicetype','servicetype','trim');
+//		if($this->form_validation->run() == FALSE)	
+//		{
+//			$data['alerterror'] = validation_errors();
+//            $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+//            $data['area']=$this->area_model->getareadropdown();
+//            $data['day']=$this->servicetype_model->getdaydropdown();
+//            $data[ 'page' ] = 'createserviceprovider';
+//            $data[ 'title' ] = 'Create serviceprovider';
+//            $this->load->view( 'template', $data );	
+//		}
+//		else
+//		{
+//            $name=$this->input->post('name');
+//            $contact=$this->input->post('contact');
+//            $area=$this->input->post('area');
+//            $rate=$this->input->post('rate');
+//            $servicetype=$this->input->post('servicetype');
+//            $day=$this->input->post('day');
+//            
+//			if($this->serviceprovider_model->create($name,$contact,$area,$rate,$servicetype,$day)==0)
+//			$data['alerterror']="New serviceprovider could not be created.";
+//			else
+//			$data['alertsuccess']="serviceprovider created Successfully.";
+//			$data['redirect']="site/viewserviceprovider";
+//			$this->load->view("redirect",$data);
+//		}
+//	}
+    
+//	function editserviceprovider()
+//	{
+//		$access = array("1");
+//		$this->checkaccess($access);
+//        $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+//        $data['day']=$this->servicetype_model->getdaydropdown();
+//        $data['area']=$this->area_model->getareadropdown();
+//        $data['selectedday']=$this->serviceprovider_model->getdaybyserviceprovider($this->input->get_post('id'));
+//		$data['page']='editserviceprovider';
+//		$data['title']='Edit serviceprovider';
+//		$data['before']=$this->serviceprovider_model->beforeedit($this->input->get('id'));
+//		$this->load->view('template',$data);
+//	}
+//	function editserviceprovidersubmit()
+//	{
+//		$access = array("1");
+//		$this->checkaccess($access);
+//		
+//		$this->form_validation->set_rules('name','Name','trim|required');
+//		$this->form_validation->set_rules('contact','contact','trim');
+//		$this->form_validation->set_rules('area','area','trim');
+//		$this->form_validation->set_rules('rate','rate','trim');
+//		$this->form_validation->set_rules('servicetype','servicetype','trim');
+//        
+//		if($this->form_validation->run() == FALSE)	
+//		{
+//			$data['alerterror'] = validation_errors();
+//			$data['page']='editserviceprovider';
+//            $data['servicetype']=$this->servicetype_model->getservicetypedropdown();
+//            $data['day']=$this->servicetype_model->getdaydropdown();
+//            $data['area']=$this->area_model->getareadropdown();
+//            $data['selectedday']=$this->serviceprovider_model->getdaybyserviceprovider($this->input->get_post('id'));
+//            $data['before']=$this->serviceprovider_model->beforeedit($this->input->get_post('id'));
+//			$data['title']='Edit serviceprovider';
+//			$this->load->view('template',$data);
+//		}
+//		else
+//		{
+//            
+//            $id=$this->input->get_post('id');
+//            $name=$this->input->post('name');
+//            $contact=$this->input->post('contact');
+//            $area=$this->input->post('area');
+//            $rate=$this->input->post('rate');
+//            $servicetype=$this->input->post('servicetype');
+//            $day=$this->input->post('day');
+//            
+//			if($this->serviceprovider_model->edit($id,$name,$contact,$area,$rate,$servicetype,$day)==0)
+//			$data['alerterror']="serviceprovider Editing was unsuccesful";
+//			else
+//			$data['alertsuccess']="serviceprovider edited Successfully.";
+//			
+//			$data['redirect']="site/viewserviceprovider";
+//			//$data['other']="template=$template";
+//			$this->load->view("redirect",$data);
+//			
+//		}
+//	}
+	
+//	function deleteserviceprovider()
+//	{
+//		$access = array("1");
+//		$this->checkaccess($access);
+//		$this->serviceprovider_model->deleteserviceprovider($this->input->get('id'));
+//		$data['alertsuccess']="serviceprovider Deleted Successfully";
+//		$data['redirect']="site/viewserviceprovider";
+//		$this->load->view("redirect",$data);
+//	}
+    
+
     
     public function createserviceprovider()
 	{
