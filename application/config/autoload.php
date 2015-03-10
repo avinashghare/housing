@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('user_model','menu_model','societyfacility_model','amenity_model','builder_model','leasetype_model','propertytype_model','property_model','propertyimage_model','propertygeolocation_model','propertyenquiry_model','testimonial_model','config_model','video_model','servicetype_model','serviceprovider_model','area_model');
+$autoload['model'] = array('user_model','menu_model','societyfacility_model','amenity_model','builder_model','leasetype_model','propertytype_model','property_model','propertyimage_model','propertygeolocation_model','propertyenquiry_model','testimonial_model','config_model','video_model','servicetype_model','serviceprovider_model','area_model','news_model','blog_model','api_model');
 
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */

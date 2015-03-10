@@ -433,6 +433,24 @@ class Json extends CI_Controller
 		$this->load->view("json",$data);
 	} 
     
+	public function gethomepageproperties()
+    {
+//        $id=$this->input->get_post('id');
+        $category=$this->input->get_post('category');
+        $iscommercial=$this->input->get_post('iscommercial');
+        $residencial=$this->input->get_post('residencial');
+        $area=$this->input->get_post('area');
+        $data['message']=$this->api_model->gethomepageproperties($category,$iscommercial,$residencial,$area);
+		$this->load->view('json',$data);
+    }
+	public function getpropertiesbycategory()
+    {
+//        $id=$this->input->get_post('id');
+        $category=$this->input->get_post('category');
+        $data['message']=$this->api_model->getpropertiesbycategory($category);
+		$this->load->view('json',$data);
+    }
+    
 }   
 //EndOfFile
 ?>

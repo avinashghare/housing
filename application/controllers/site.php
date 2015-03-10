@@ -3273,5 +3273,478 @@ class Site extends CI_Controller
 	}
     
     
+    //news
+    function viewnews()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewnews';
+        $data['base_url'] = site_url("site/viewnewsjson");
+        
+		$data['title']='View news';
+		$this->load->view('template',$data);
+	} 
+    function viewnewsjson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`news`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`news`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`news`.`text`";
+        $elements[2]->sort="1";
+        $elements[2]->header="text";
+        $elements[2]->alias="text";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`news`.`image`";
+        $elements[3]->sort="1";
+        $elements[3]->header="image";
+        $elements[3]->alias="image";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`news`.`date`";
+        $elements[4]->sort="1";
+        $elements[4]->header="date";
+        $elements[4]->alias="date";
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`news`.`timestamp`";
+        $elements[5]->sort="1";
+        $elements[5]->header="timestamp";
+        $elements[5]->alias="timestamp";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `news`");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createnews()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createnews';
+		$data[ 'title' ] = 'Create news';
+		$this->load->view( 'template', $data );	
+	}
+	function createnewssubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('text','text','trim');
+		$this->form_validation->set_rules('date','date_parse','trim');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createnews';
+            $data[ 'title' ] = 'Create news';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            $text=$this->input->post('text');
+            $date=$this->input->post('date');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+			if($this->news_model->create($name,$text,$date,$image)==0)
+			$data['alerterror']="New news could not be created.";
+			else
+			$data['alertsuccess']="news created Successfully.";
+			$data['redirect']="site/viewnews";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editnews()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editnews';
+		$data['title']='Edit news';
+		$data['before']=$this->news_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editnewssubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('text','text','trim');
+		$this->form_validation->set_rules('date','date_parse','trim');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editnews';
+            $data['before']=$this->news_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit news';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->post('name');
+            $text=$this->input->post('text');
+            $date=$this->input->post('date');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+            
+            if($image=="")
+            {
+                $image=$this->news_model->getnewsimagebyid($id);
+                $image=$image->image;
+            }
+            
+			if($this->news_model->edit($id,$name,$text,$date,$image)==0)
+			$data['alerterror']="news Editing was unsuccesful";
+			else
+			$data['alertsuccess']="news edited Successfully.";
+			
+			$data['redirect']="site/viewnews";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deletenews()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->news_model->deletenews($this->input->get('id'));
+		$data['alertsuccess']="news Deleted Successfully";
+		$data['redirect']="site/viewnews";
+		$this->load->view("redirect",$data);
+	}
+    
+    //blog
+    function viewblog()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='viewblog';
+        $data['base_url'] = site_url("site/viewblogjson");
+        
+		$data['title']='View blog';
+		$this->load->view('template',$data);
+	} 
+    function viewblogjson()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        
+        
+        $elements=array();
+        $elements[0]=new stdClass();
+        $elements[0]->field="`blog`.`id`";
+        $elements[0]->sort="1";
+        $elements[0]->header="ID";
+        $elements[0]->alias="id";
+        
+        
+        $elements[1]=new stdClass();
+        $elements[1]->field="`blog`.`name`";
+        $elements[1]->sort="1";
+        $elements[1]->header="Name";
+        $elements[1]->alias="name";
+        
+        $elements[2]=new stdClass();
+        $elements[2]->field="`blog`.`text`";
+        $elements[2]->sort="1";
+        $elements[2]->header="text";
+        $elements[2]->alias="text";
+        
+        $elements[3]=new stdClass();
+        $elements[3]->field="`blog`.`image`";
+        $elements[3]->sort="1";
+        $elements[3]->header="image";
+        $elements[3]->alias="image";
+        
+        $elements[4]=new stdClass();
+        $elements[4]->field="`blog`.`date`";
+        $elements[4]->sort="1";
+        $elements[4]->header="date";
+        $elements[4]->alias="date";
+        
+        $elements[5]=new stdClass();
+        $elements[5]->field="`blog`.`timestamp`";
+        $elements[5]->sort="1";
+        $elements[5]->header="timestamp";
+        $elements[5]->alias="timestamp";
+        
+        
+        $search=$this->input->get_post("search");
+        $pageno=$this->input->get_post("pageno");
+        $orderby=$this->input->get_post("orderby");
+        $orderorder=$this->input->get_post("orderorder");
+        $maxrow=$this->input->get_post("maxrow");
+        if($maxrow=="")
+        {
+            $maxrow=20;
+        }
+        
+        if($orderby=="")
+        {
+            $orderby="id";
+            $orderorder="ASC";
+        }
+       
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `blog`");
+        
+		$this->load->view("json",$data);
+	} 
+    
+    public function createblog()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'createblog';
+		$data[ 'title' ] = 'Create blog';
+		$this->load->view( 'template', $data );	
+	}
+	function createblogsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('text','text','trim');
+		$this->form_validation->set_rules('date','date_parse','trim');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+            $data[ 'page' ] = 'createblog';
+            $data[ 'title' ] = 'Create blog';
+            $this->load->view( 'template', $data );	
+		}
+		else
+		{
+            $name=$this->input->post('name');
+            $text=$this->input->post('text');
+            $date=$this->input->post('date');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+			if($this->blog_model->create($name,$text,$date,$image)==0)
+			$data['alerterror']="New blog could not be created.";
+			else
+			$data['alertsuccess']="blog created Successfully.";
+			$data['redirect']="site/viewblog";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+	function editblog()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['page']='editblog';
+		$data['title']='Edit blog';
+		$data['before']=$this->blog_model->beforeedit($this->input->get('id'));
+		$this->load->view('template',$data);
+	}
+	function editblogsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('name','Name','trim|required');
+		$this->form_validation->set_rules('text','text','trim');
+		$this->form_validation->set_rules('date','date_parse','trim');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['page']='editblog';
+            $data['before']=$this->blog_model->beforeedit($this->input->get('id'));
+			$data['title']='Edit blog';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+            
+            $id=$this->input->get_post('id');
+            $name=$this->input->post('name');
+            $text=$this->input->post('text');
+            $date=$this->input->post('date');
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+                
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                $config_r['width']   = 800;
+                $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r); 
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                }  
+                else
+                {
+                    $image=$this->image_lib->dest_image;
+                }
+                
+			}
+            
+            if($image=="")
+            {
+                $image=$this->blog_model->getblogimagebyid($id);
+                $image=$image->image;
+            }
+            
+			if($this->blog_model->edit($id,$name,$text,$date,$image)==0)
+			$data['alerterror']="blog Editing was unsuccesful";
+			else
+			$data['alertsuccess']="blog edited Successfully.";
+			
+			$data['redirect']="site/viewblog";
+			//$data['other']="template=$template";
+			$this->load->view("redirect",$data);
+			
+		}
+	}
+	
+	function deleteblog()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->blog_model->deleteblog($this->input->get('id'));
+		$data['alertsuccess']="blog Deleted Successfully";
+		$data['redirect']="site/viewblog";
+		$this->load->view("redirect",$data);
+	}
+    
+    
 }
 ?>
