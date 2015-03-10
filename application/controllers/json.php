@@ -175,15 +175,10 @@ class Json extends CI_Controller
     public function addenquiry()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-<<<<<<< HEAD
-//        echo "before";
-//        print_r($data);
-//        echo "after";
-=======
+
         echo "before";
         print_r($data);
         echo "after";
->>>>>>> origin/master
         $userid=$data['userid'];
         $propertyid=$data['propertyid'];
         $message=$data['message'];
@@ -247,9 +242,6 @@ class Json extends CI_Controller
         $this->load->view('json',$data);
     
     }
-<<<<<<< HEAD
-    
-    
     public function getserviceproviderbytypeold()
 	{
 		
@@ -441,8 +433,6 @@ class Json extends CI_Controller
 		$this->load->view("json",$data);
 	} 
     
-=======
->>>>>>> origin/master
 }   
 //EndOfFile
 ?>
